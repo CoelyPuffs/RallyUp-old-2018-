@@ -45,7 +45,7 @@ namespace RallyUp
 		{
 			
 			// aapt resource value: 0x7f040000
-			public const int button1 = 2130968576;
+			public const int pingButton = 2130968576;
 			
 			static Id()
 			{

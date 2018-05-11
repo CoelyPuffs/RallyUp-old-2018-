@@ -10,5 +10,5 @@
         android:textSize="64sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/button1" />
+        android:id="@+id/pingButton" />
 </LinearLayout>

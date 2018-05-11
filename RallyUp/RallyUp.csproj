@@ -78,6 +78,12 @@
     <Folder Include="Resources\mipmap-xxhdpi\" />
     <Folder Include="Resources\mipmap-xxxhdpi\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RallyUpLibrary\RallyUpLibrary.csproj">
+      <Project>{619004bb-f0de-428e-a2bd-6435055a47c7}</Project>
+      <Name>RallyUpLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.
