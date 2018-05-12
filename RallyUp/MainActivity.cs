@@ -26,10 +26,10 @@ namespace RallyUp
             socket = new TcpClient("10.0.0.6", 3292);
             socket.WriteString("Jane");
 
-            pingButton.Click += new EventHandler(pingFunc);
+            pingButton.Click += new EventHandler(PingFunc);
         }
 
-        private void pingFunc(object sender, EventArgs e)
+        private void PingFunc(object sender, EventArgs e)
         {
             socket.WriteString("Ping");
         }
