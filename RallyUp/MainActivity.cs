@@ -33,6 +33,7 @@ namespace RallyUp
             pingButton.Click += delegate
             {
                 socket.WriteString("Ping");
+                Log.Debug("MainActivity", "InstanceID token: " + FirebaseInstanceId.Instance.Token);
             };
         }
     }
