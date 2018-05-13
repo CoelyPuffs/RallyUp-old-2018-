@@ -4,6 +4,10 @@ using Android.OS;
 using System.Net.Sockets;
 using RallyUpLibrary;
 using System;
+using Android.Gms.Common;
+using Firebase.Messaging;
+using Firebase.Iid;
+using Android.Util;
 
 namespace RallyUp
 {
