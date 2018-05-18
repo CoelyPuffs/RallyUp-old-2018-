@@ -30,6 +30,8 @@ namespace RallyUp
             socket = new TcpClient("10.0.0.6", 3292);
             socket.WriteString("Jane");
 
+            FirebaseMessaging.Instance.SubscribeToTopic("Testing");
+
             pingButton.Click += delegate
             {
                 socket.WriteString("Ping");
