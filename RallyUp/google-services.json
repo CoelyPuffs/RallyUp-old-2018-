@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1022085567661",
+    "firebase_url": "https://rallyup-246d7.firebaseio.com",
+    "project_id": "rallyup-246d7",
+    "storage_bucket": "rallyup-246d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022085567661:android:794e934c87823234",
+        "android_client_info": {
+          "package_name": "RallyUp.RallyUp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022085567661-jm8litdgtt66logbdplc23b4al6h7ki0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHZHxNtAktT1m1kjh_rRbVHC0j_Euhg1M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

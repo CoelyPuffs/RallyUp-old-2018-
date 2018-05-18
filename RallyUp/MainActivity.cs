@@ -4,6 +4,10 @@ using Android.OS;
 using System.Net.Sockets;
 using RallyUpLibrary;
 using System;
+using Android.Gms.Common;
+using Firebase.Messaging;
+using Firebase.Iid;
+using Android.Util;
 
 namespace RallyUp
 {
@@ -26,12 +30,13 @@ namespace RallyUp
             socket = new TcpClient("10.0.0.6", 3292);
             socket.WriteString("Jane");
 
-            pingButton.Click += new EventHandler(PingFunc);
-        }
+            FirebaseMessaging.Instance.SubscribeToTopic("Testing");
 
-        private void PingFunc(object sender, EventArgs e)
-        {
-            socket.WriteString("Ping");
+            pingButton.Click += delegate
+            {
+                socket.WriteString("Ping");
+                Log.Debug("MainActivity", "InstanceID token: " + FirebaseInstanceId.Instance.Token);
+            };
         }
     }
 }

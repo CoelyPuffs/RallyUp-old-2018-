@@ -30,15 +30,6 @@ namespace RallyUpServer
                 newLil.initializeClient(clientSocket,clientData);
             }
         }
-
-        public static void sendPong()
-        {
-            foreach (var client in clientele)
-            {
-                client.Value.WriteString("Pong!");
-            }
-        }
-
     }
 
     public static class TcpClientExtension
