@@ -1,43 +1,42 @@
-﻿using Android.App;
-using Android.Widget;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Android.App;
+using Android.Content;
 using Android.OS;
-using System.Net.Sockets;
-using RallyUpLibrary;
-using System;
-using Android.Gms.Common;
-using Firebase.Messaging;
-using Firebase.Iid;
-using Android.Util;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
 
 namespace RallyUp
 {
-    [Activity(Label = "RallyUp", MainLauncher = true)]
+    [Activity(Label = "Menu", MainLauncher = true)]
     public class MainActivity : Activity
     {
-        private TcpClient socket;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+            ActionBar.Hide();
 
-            // Locate ping button
-            Button pingButton = FindViewById<Button>(Resource.Id.pingButton);
+            Button menuButton = FindViewById<Button>(Resource.Id.menuButton);
+            Button firstItemButton = FindViewById<Button>(Resource.Id.firstItem);
+            Button secondItemButton = FindViewById<Button>(Resource.Id.secondItem);
 
-            // Connect to Rally Up Server
-            socket = new TcpClient("10.0.0.6", 3292);
-            socket.WriteString("Jane");
-
-            FirebaseMessaging.Instance.SubscribeToTopic("Testing");
-
-            pingButton.Click += delegate
+            firstItemButton.Click += delegate
             {
-                socket.WriteString("Ping");
-                Log.Debug("MainActivity", "InstanceID token: " + FirebaseInstanceId.Instance.Token);
+                StartActivity(typeof(PingActivity));
+            };
+
+            menuButton.Click += delegate
+            {
+                firstItemButton.Visibility = ViewStates.Visible;
+                secondItemButton.Visibility = ViewStates.Visible;
+                firstItemButton.Animate().TranslationY(menuButton.Height).SetDuration(500);
+                secondItemButton.Animate().TranslationY(menuButton.Height + firstItemButton.Height).SetDuration(500);
             };
         }
     }
 }
-
