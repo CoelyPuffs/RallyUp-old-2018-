@@ -21,7 +21,14 @@ namespace RallyUp
             SetContentView(Resource.Layout.Main);
             ActionBar.Hide();
 
-            Button menuButton = FindViewById<Button>(Resource.Id.menuButton);
+            Button registerButton = FindViewById<Button>(Resource.Id.registerButton);
+
+            registerButton.Click += delegate 
+            {
+                StartActivity(typeof(RegistrationActivity));
+            };
+
+            /*Button menuButton = FindViewById<Button>(Resource.Id.menuButton);
             Button firstItemButton = FindViewById<Button>(Resource.Id.firstItem);
             Button secondItemButton = FindViewById<Button>(Resource.Id.secondItem);
 
@@ -36,7 +43,7 @@ namespace RallyUp
                 secondItemButton.Visibility = ViewStates.Visible;
                 firstItemButton.Animate().TranslationY(menuButton.Height).SetDuration(500);
                 secondItemButton.Animate().TranslationY(menuButton.Height + firstItemButton.Height).SetDuration(500);
-            };
+            };*/
         }
     }
 }

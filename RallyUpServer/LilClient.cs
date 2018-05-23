@@ -9,6 +9,8 @@ using System.Net.Sockets;
 using System.Threading;
 using RallyUpLibrary;
 using System.Web.Script.Serialization;
+using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace RallyUpServer
 {
@@ -17,6 +19,8 @@ namespace RallyUpServer
     {
         private TcpClient clientSocket;
         private string clientName;
+        private static string connection = @"Server=(localdb)\MSSQLLocalDB;Database=RallyUpDB;Trusted_Connection=True;ConnectRetryCount=0";
+        SqlConnection sqlConnection1 = new SqlConnection(connection);
 
         public void initializeClient(TcpClient clientSocket, string clientName)
         {
@@ -34,8 +38,19 @@ namespace RallyUpServer
                 {
                     string clientData = clientSocket.ReadString();
                     Console.WriteLine(clientData);
-                    System.Threading.Thread.Sleep(5000);
-                    SendPushNotification();
+                    if (clientData == "Ping")
+                    {
+                        System.Threading.Thread.Sleep(5000);
+                        SendPushNotification();
+                    }
+                    else if (clientData.Split(':')[0] == "Register")
+                    {
+                        string potentialUsername = clientData.Split(':')[1];
+                        if (checkUsernameUnique(potentialUsername))
+                        {
+                            registerUser(potentialUsername, clientData.Split(':')[2]);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -95,6 +110,53 @@ namespace RallyUpServer
                 str = ex.Message;
             }
             Console.WriteLine(str);
+        }
+
+        bool checkUsernameUnique(string username)
+        {
+            bool isUnique = false;
+            string query = "SELECT username FROM RallyUpUser WHERE RallyUpUser.username = @potentialName";
+            
+            SqlCommand cmd = new SqlCommand(query, sqlConnection1);
+            cmd.Parameters.AddWithValue("@potentialName", username);
+            SqlDataReader reader;
+
+            sqlConnection1.Open();
+
+            reader = cmd.ExecuteReader();
+            isUnique = !reader.HasRows;
+
+            sqlConnection1.Close();
+
+            return isUnique;
+        }
+
+        void registerUser(string username, string password)
+        {
+            string query = "INSERT INTO RallyUpUser(username, pwSalt, pwHash) VALUES (@username, @pwSalt, @pwHash)";
+            byte[] pwSalt = GenerateSalt();
+            byte[] pwHash = GenerateHash(Encoding.ASCII.GetBytes(password), pwSalt, 500, 50);
+            SqlCommand cmd = new SqlCommand(query, sqlConnection1);
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@pwSalt", pwSalt);
+            cmd.Parameters.AddWithValue("@pwHash", pwHash);
+            SqlDataReader reader;
+            sqlConnection1.Open();
+            reader = cmd.ExecuteReader();
+        }
+
+        byte[] GenerateSalt()
+        {
+            byte[] bytes = new byte[15];
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            rng.GetBytes(bytes);
+            return bytes;
+        }
+
+        byte[] GenerateHash(byte[] password, byte[] salt, int iterations, int length)
+        {
+            var deriveBytes = new Rfc2898DeriveBytes(password, salt, iterations);
+            return deriveBytes.GetBytes(length);
         }
     }
 }
