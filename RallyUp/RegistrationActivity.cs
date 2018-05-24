@@ -25,6 +25,8 @@ namespace RallyUp
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.RegistrationPage);
             ActionBar.Hide();
+            socket = new TcpClient("10.0.0.6", 3292);
+            socket.WriteString("JaneRegister");
 
             EditText newUserBox = FindViewById<EditText>(Resource.Id.newUserBox);
             EditText newPassBox = FindViewById<EditText>(Resource.Id.newPassBox);
@@ -32,9 +34,8 @@ namespace RallyUp
 
             registerButton.Click += delegate
             {
-                socket = new TcpClient("10.0.0.6", 3292);
-                socket.WriteString("Jane");
                 socket.WriteString("Register:" + newUserBox.Text + ':' + newPassBox.Text);
+                registerButton.Text = "Registered!";
             };
         }
 

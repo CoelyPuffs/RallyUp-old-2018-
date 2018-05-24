@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net.Sockets;
 
 using Android.App;
 using Android.Content;
@@ -10,40 +11,42 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
+using RallyUpLibrary;
+
 namespace RallyUp
 {
-    [Activity(Label = "Menu", MainLauncher = true)]
+    [Activity(Label = "RallyUp", MainLauncher = true)]
     public class MainActivity : Activity
     {
+        private TcpClient socket;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Main);
             ActionBar.Hide();
+            socket = new TcpClient("10.0.0.6", 3292);
+            socket.WriteString("JaneLogin");
 
+            EditText userBox = FindViewById<EditText>(Resource.Id.userBox);
+            EditText passBox = FindViewById<EditText>(Resource.Id.passBox);
+            Button loginButton = FindViewById<Button>(Resource.Id.loginButton);
             Button registerButton = FindViewById<Button>(Resource.Id.registerButton);
+
+            loginButton.Click += delegate 
+            {
+                socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
+                if (socket.ReadString() == "ValidCredentials")
+                {
+                    StartActivity(typeof(PingActivity));
+                }
+            };
 
             registerButton.Click += delegate 
             {
+                socket.Close();
                 StartActivity(typeof(RegistrationActivity));
             };
-
-            /*Button menuButton = FindViewById<Button>(Resource.Id.menuButton);
-            Button firstItemButton = FindViewById<Button>(Resource.Id.firstItem);
-            Button secondItemButton = FindViewById<Button>(Resource.Id.secondItem);
-
-            firstItemButton.Click += delegate
-            {
-                StartActivity(typeof(PingActivity));
-            };
-
-            menuButton.Click += delegate
-            {
-                firstItemButton.Visibility = ViewStates.Visible;
-                secondItemButton.Visibility = ViewStates.Visible;
-                firstItemButton.Animate().TranslationY(menuButton.Height).SetDuration(500);
-                secondItemButton.Animate().TranslationY(menuButton.Height + firstItemButton.Height).SetDuration(500);
-            };*/
         }
     }
 }

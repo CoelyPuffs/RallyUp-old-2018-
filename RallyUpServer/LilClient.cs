@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using RallyUpLibrary;
 using System.Web.Script.Serialization;
+using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
+
+using RallyUpLibrary;
 
 namespace RallyUpServer
 {
@@ -51,6 +53,35 @@ namespace RallyUpServer
                             registerUser(potentialUsername, clientData.Split(':')[2]);
                         }
                     }
+                    else if (clientData.Split(':')[0] == "Login")
+                    {
+                        string username = clientData.Split(':')[1];
+                        string password = clientData.Split(':')[2];
+
+                        string query = "SELECT pwSalt, pwHash FROM RallyUpUser WHERE RallyUpUser.username = @username";
+                        SqlCommand cmd = new SqlCommand(query, sqlConnection1);
+                        cmd.Parameters.AddWithValue("@username", username);
+                        SqlDataReader reader;
+                        sqlConnection1.Open();
+                        reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            var salt = reader.GetValue(0);
+                            var realHash = reader.GetValue(1);
+
+                            if (((byte[])realHash).SequenceEqual(GenerateHash(Encoding.ASCII.GetBytes(password), (byte[])salt, 500, 50)))
+                            {
+                                clientSocket.WriteString("ValidCredentials");
+                                Console.WriteLine("ValidCredentials");
+                            }
+                            else
+                            {
+                                clientSocket.WriteString("BadCredentials");
+                                Console.WriteLine("BadCredentials");
+                            }
+                        }
+                        sqlConnection1.Close();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -67,7 +98,7 @@ namespace RallyUpServer
             {
                 string applicationID = "1:1022085567661:android:794e934c87823234";
                 string senderId = "1022085567661";
-                string deviceId = "d16EVnuaNF8:APA91bHj_ANySih5rBxITWW91i-qTyFSOrJ8CxOi1Vd-_zx8e7Uhrz8tgVLglCl0KihwRN2igr6ihjJJDL4XYkzLu62w-zVVmZ9liERsiTIMnOc6rwPDF5AxNFYoFAOadUlhV2zEDrpG";
+                //string deviceId = "d16EVnuaNF8:APA91bHj_ANySih5rBxITWW91i-qTyFSOrJ8CxOi1Vd-_zx8e7Uhrz8tgVLglCl0KihwRN2igr6ihjJJDL4XYkzLu62w-zVVmZ9liERsiTIMnOc6rwPDF5AxNFYoFAOadUlhV2zEDrpG";
                 WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
                 tRequest.Method = "post";
                 tRequest.ContentType = "application/json";

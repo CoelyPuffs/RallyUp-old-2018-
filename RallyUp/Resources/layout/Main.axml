@@ -12,7 +12,7 @@
     <EditText
         android:id="@+id/userBox"
         android:inputType="textVisiblePassword"
-        android:textAlignment="center"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
     <TextView
@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/passBox"
         android:inputType="textPassword"
-        android:textAlignment="center"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
     <Button
