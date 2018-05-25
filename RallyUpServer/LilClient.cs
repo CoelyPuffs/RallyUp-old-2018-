@@ -34,36 +34,43 @@ namespace RallyUpServer
 
         private void runClientThread()
         {
-            while (true)
+            try
             {
-                try
+                string clientData = clientSocket.ReadString();
+                Console.WriteLine(clientData);
+                if (clientData == "Ping")
                 {
-                    string clientData = clientSocket.ReadString();
-                    Console.WriteLine(clientData);
-                    if (clientData == "Ping")
+                    System.Threading.Thread.Sleep(5000);
+                    SendPushNotification();
+                }
+                else if (clientData.Split(':')[0] == "Register")
+                {
+                    string potentialUsername = clientData.Split(':')[1];
+                    if (checkUsernameUnique(potentialUsername))
                     {
-                        System.Threading.Thread.Sleep(5000);
-                        SendPushNotification();
+                        registerUser(potentialUsername, clientData.Split(':')[2], clientData.Split(':')[3]);
+                        clientSocket.WriteString("RegistrationSuccessful");
+                        Console.WriteLine("RegistrationSuccessful");
                     }
-                    else if (clientData.Split(':')[0] == "Register")
+                    else
                     {
-                        string potentialUsername = clientData.Split(':')[1];
-                        if (checkUsernameUnique(potentialUsername))
-                        {
-                            registerUser(potentialUsername, clientData.Split(':')[2]);
-                        }
+                        clientSocket.WriteString("UsernameAlreadyRegistered");
+                        Console.WriteLine("UsernameAlreadyRegistered: " + potentialUsername);
                     }
-                    else if (clientData.Split(':')[0] == "Login")
-                    {
-                        string username = clientData.Split(':')[1];
-                        string password = clientData.Split(':')[2];
+                }
+                else if (clientData.Split(':')[0] == "Login")
+                {
+                    string username = clientData.Split(':')[1];
+                    string password = clientData.Split(':')[2];
 
-                        string query = "SELECT pwSalt, pwHash FROM RallyUpUser WHERE RallyUpUser.username = @username";
-                        SqlCommand cmd = new SqlCommand(query, sqlConnection1);
-                        cmd.Parameters.AddWithValue("@username", username);
-                        SqlDataReader reader;
-                        sqlConnection1.Open();
-                        reader = cmd.ExecuteReader();
+                    string query = "SELECT pwSalt, pwHash FROM RallyUpUser WHERE RallyUpUser.username = @username";
+                    SqlCommand cmd = new SqlCommand(query, sqlConnection1);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader reader;
+                    sqlConnection1.Open();
+                    reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
                         while (reader.Read())
                         {
                             var salt = reader.GetValue(0);
@@ -76,17 +83,22 @@ namespace RallyUpServer
                             }
                             else
                             {
-                                clientSocket.WriteString("BadCredentials");
-                                Console.WriteLine("BadCredentials");
+                                clientSocket.WriteString("BadPassword");
+                                Console.WriteLine("BadPassword");
                             }
                         }
-                        sqlConnection1.Close();
                     }
+                    else
+                    {
+                        clientSocket.WriteString("noUser");
+                        Console.WriteLine(username + " not found");
+                    }
+                    sqlConnection1.Close();
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
 
@@ -147,7 +159,7 @@ namespace RallyUpServer
         {
             bool isUnique = false;
             string query = "SELECT username FROM RallyUpUser WHERE RallyUpUser.username = @potentialName";
-            
+
             SqlCommand cmd = new SqlCommand(query, sqlConnection1);
             cmd.Parameters.AddWithValue("@potentialName", username);
             SqlDataReader reader;
@@ -162,15 +174,16 @@ namespace RallyUpServer
             return isUnique;
         }
 
-        void registerUser(string username, string password)
+        void registerUser(string username, string password, string screenName)
         {
-            string query = "INSERT INTO RallyUpUser(username, pwSalt, pwHash) VALUES (@username, @pwSalt, @pwHash)";
+            string query = "INSERT INTO RallyUpUser(username, pwSalt, pwHash, screenName) VALUES (@username, @pwSalt, @pwHash, @screenName)";
             byte[] pwSalt = GenerateSalt();
             byte[] pwHash = GenerateHash(Encoding.ASCII.GetBytes(password), pwSalt, 500, 50);
             SqlCommand cmd = new SqlCommand(query, sqlConnection1);
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@pwSalt", pwSalt);
             cmd.Parameters.AddWithValue("@pwHash", pwHash);
+            cmd.Parameters.AddWithValue("@screenName", screenName);
             SqlDataReader reader;
             sqlConnection1.Open();
             reader = cmd.ExecuteReader();

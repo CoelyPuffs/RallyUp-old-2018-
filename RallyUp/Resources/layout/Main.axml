@@ -5,10 +5,21 @@
     android:layout_height="match_parent"
     android:gravity="center">
     <TextView
+        android:text="RALLY UP!"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="32sp" />
+    <TextView
+        android:text =" "
+        android:id="@+id/loginErrorBox"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="60sp" />
+    <TextView
         android:text="Username"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textAllCaps="true" />
+        android:layout_marginTop="20sp" />
     <EditText
         android:id="@+id/userBox"
         android:inputType="textVisiblePassword"
@@ -18,8 +29,7 @@
     <TextView
         android:text="Password"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:textAllCaps="true" />
+        android:layout_width="wrap_content" />
     <EditText
         android:id="@+id/passBox"
         android:inputType="textPassword"
@@ -28,9 +38,10 @@
         android:layout_width="match_parent" />
     <Button
         android:id="@+id/loginButton"
-        android:text="LOGIN"
+        android:text="Login"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15sp" />
     <Button
         android:id="@+id/registerButton"
         android:text="New user? Click here to register"

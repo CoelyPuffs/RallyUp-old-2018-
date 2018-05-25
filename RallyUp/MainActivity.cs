@@ -25,26 +25,44 @@ namespace RallyUp
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Main);
             ActionBar.Hide();
-            socket = new TcpClient("10.0.0.6", 3292);
-            socket.WriteString("JaneLogin");
 
+            TextView errorBox = FindViewById<TextView>(Resource.Id.loginErrorBox);
             EditText userBox = FindViewById<EditText>(Resource.Id.userBox);
             EditText passBox = FindViewById<EditText>(Resource.Id.passBox);
             Button loginButton = FindViewById<Button>(Resource.Id.loginButton);
             Button registerButton = FindViewById<Button>(Resource.Id.registerButton);
 
-            loginButton.Click += delegate 
+            loginButton.Click += delegate
             {
-                socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
-                if (socket.ReadString() == "ValidCredentials")
+                try
                 {
-                    StartActivity(typeof(PingActivity));
+                    socket = new TcpClient("10.0.0.6", 3292);
+                    socket.WriteString("JaneLogin");
+                    errorBox.Text = "";
+                    socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
+                    string returnString = socket.ReadString();
+                    if (returnString == "ValidCredentials")
+                    {
+                        StartActivity(typeof(PingActivity));
+                    }
+                    else if (returnString == "BadPassword")
+                    {
+                        errorBox.Text = "Incorrect Password.";
+                    }
+                    else if (returnString == "noUser")
+                    {
+                        errorBox.Text = "Invalid Username.";
+                    }
+                    socket.Close();
+                }
+                catch
+                {
+                    errorBox.Text = "Server connection failed. Make sure you're online.";
                 }
             };
 
-            registerButton.Click += delegate 
+            registerButton.Click += delegate
             {
-                socket.Close();
                 StartActivity(typeof(RegistrationActivity));
             };
         }
