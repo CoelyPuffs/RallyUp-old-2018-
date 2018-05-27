@@ -36,8 +36,8 @@ namespace RallyUp
             {
                 try
                 {
-                    socket = new TcpClient("10.0.0.6", 3292);
-                    socket.WriteString("JaneLogin");
+                    socket = new TcpClient("10.0.0.2", 3292);
+                    //socket.WriteString("JaneLogin");
                     errorBox.Text = "";
                     socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
                     string returnString = socket.ReadString();

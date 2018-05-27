@@ -28,8 +28,8 @@ namespace RallyUp
             // Connect to Rally Up Server
             try
             {
-                socket = new TcpClient("10.0.0.6", 3292);
-                socket.WriteString("Jane");
+                socket = new TcpClient("10.0.0.2", 3292);
+                //socket.WriteString("Jane");
             }
             catch
             {

@@ -20,19 +20,17 @@ namespace RallyUpServer
     class LilClient
     {
         private TcpClient clientSocket;
-        private string clientName;
+        //private string clientName;
         private static string connection = @"Server=(localdb)\MSSQLLocalDB;Database=RallyUpDB;Trusted_Connection=True;ConnectRetryCount=0";
         SqlConnection sqlConnection1 = new SqlConnection(connection);
 
-        public void initializeClient(TcpClient clientSocket, string clientName)
+        public LilClient(TcpClient clientSocket)
         {
-            this.clientName = clientName;
+            //this.clientName = clientName;
             this.clientSocket = clientSocket;
-            Thread thread = new Thread(runClientThread);
-            thread.Start();
         }
 
-        private void runClientThread()
+        public void runClientThread()
         {
             try
             {
