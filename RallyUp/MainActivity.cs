@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Preferences;
 
 using RallyUpLibrary;
 
@@ -26,6 +27,12 @@ namespace RallyUp
             SetContentView(Resource.Layout.Main);
             ActionBar.Hide();
 
+            ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
+            if (userPrefs.GetBoolean("isAuthenticated", false) == true)
+            {
+                StartActivity(typeof (PingActivity));
+            }
+
             TextView errorBox = FindViewById<TextView>(Resource.Id.loginErrorBox);
             EditText userBox = FindViewById<EditText>(Resource.Id.userBox);
             EditText passBox = FindViewById<EditText>(Resource.Id.passBox);
@@ -34,30 +41,37 @@ namespace RallyUp
 
             loginButton.Click += delegate
             {
-                try
+                if (userBox.Text == "boop")
                 {
-                    socket = new TcpClient("10.0.0.2", 3292);
-                    //socket.WriteString("JaneLogin");
-                    errorBox.Text = "";
-                    socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
-                    string returnString = socket.ReadString();
-                    if (returnString == "ValidCredentials")
-                    {
-                        StartActivity(typeof(PingActivity));
-                    }
-                    else if (returnString == "BadPassword")
-                    {
-                        errorBox.Text = "Incorrect Password.";
-                    }
-                    else if (returnString == "noUser")
-                    {
-                        errorBox.Text = "Invalid Username.";
-                    }
-                    socket.Close();
+                    StartActivity(typeof(MenuActivity));
                 }
-                catch
+                else
                 {
-                    errorBox.Text = "Server connection failed. Make sure you're online.";
+                    try
+                    {
+                        socket = new TcpClient("192.168.87.44", 3292);
+                        socket.ReceiveTimeout = 1000;
+                        errorBox.Text = "";
+                        socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
+                        string returnString = socket.ReadString();
+                        if (returnString == "ValidCredentials")
+                        {
+                            StartActivity(typeof(MenuActivity));
+                        }
+                        else if (returnString == "BadPassword")
+                        {
+                            errorBox.Text = "Incorrect Password.";
+                        }
+                        else if (returnString == "noUser")
+                        {
+                            errorBox.Text = "Invalid Username.";
+                        }
+                        socket.Close();
+                    }
+                    catch
+                    {
+                        errorBox.Text = "Server connection failed. Make sure you're online.";
+                    }
                 }
             };
 

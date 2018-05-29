@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Preferences;
 
 using RallyUpLibrary;
 
@@ -36,14 +37,19 @@ namespace RallyUp
             {
                 try
                 {
-                    socket = new TcpClient("10.0.0.2", 3292);
-                    //socket.WriteString("JaneRegister");
+                    socket = new TcpClient("192.168.87.44", 3292);
                     socket.WriteString("Register:" + newUserBox.Text + ':' + newPassBox.Text + ':' + screenNameBox.Text);
                     errorBox.Text = "";
                     if (socket.ReadString() == "RegistrationSuccessful")
                     {
+                        socket.Close();
                         errorBox.Text = "Registration successful. Logging you in.";
-                        // TODO: save credentials, log in
+                        ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
+                        ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
+                        prefsEditor.PutString("currentUsername", newUserBox.Text);
+                        prefsEditor.PutString("currentPassword", newPassBox.Text);
+                        prefsEditor.PutBoolean("isAuthenticated", true);
+                        this.Finish();
                     }
                     else if (socket.ReadString() == "UsernameAlreadyRegistered")
                     {

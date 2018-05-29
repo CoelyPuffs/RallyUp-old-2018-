@@ -360,23 +360,26 @@ namespace RallyUp
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0a001b
-			public const int action0 = 2131361819;
+			// aapt resource value: 0x7f0a001d
+			public const int aboutButton = 2131361821;
 			
-			// aapt resource value: 0x7f0a0018
-			public const int action_container = 2131361816;
+			// aapt resource value: 0x7f0a0021
+			public const int action0 = 2131361825;
+			
+			// aapt resource value: 0x7f0a001e
+			public const int action_container = 2131361822;
+			
+			// aapt resource value: 0x7f0a0025
+			public const int action_divider = 2131361829;
 			
 			// aapt resource value: 0x7f0a001f
-			public const int action_divider = 2131361823;
+			public const int action_image = 2131361823;
 			
-			// aapt resource value: 0x7f0a0019
-			public const int action_image = 2131361817;
+			// aapt resource value: 0x7f0a0020
+			public const int action_text = 2131361824;
 			
-			// aapt resource value: 0x7f0a001a
-			public const int action_text = 2131361818;
-			
-			// aapt resource value: 0x7f0a0029
-			public const int actions = 2131361833;
+			// aapt resource value: 0x7f0a002f
+			public const int actions = 2131361839;
 			
 			// aapt resource value: 0x7f0a0005
 			public const int adjust_height = 2131361797;
@@ -393,32 +396,41 @@ namespace RallyUp
 			// aapt resource value: 0x7f0a000f
 			public const int blocking = 2131361807;
 			
-			// aapt resource value: 0x7f0a001c
-			public const int cancel_action = 2131361820;
+			// aapt resource value: 0x7f0a0019
+			public const int calendarButton = 2131361817;
 			
-			// aapt resource value: 0x7f0a0024
-			public const int chronometer = 2131361828;
+			// aapt resource value: 0x7f0a0022
+			public const int cancel_action = 2131361826;
+			
+			// aapt resource value: 0x7f0a002a
+			public const int chronometer = 2131361834;
 			
 			// aapt resource value: 0x7f0a000c
 			public const int dark = 2131361804;
 			
-			// aapt resource value: 0x7f0a002b
-			public const int end_padder = 2131361835;
+			// aapt resource value: 0x7f0a0031
+			public const int end_padder = 2131361841;
+			
+			// aapt resource value: 0x7f0a001c
+			public const int eventsButton = 2131361820;
 			
 			// aapt resource value: 0x7f0a0010
 			public const int forever = 2131361808;
 			
-			// aapt resource value: 0x7f0a0026
-			public const int icon = 2131361830;
+			// aapt resource value: 0x7f0a001b
+			public const int friendButton = 2131361819;
 			
-			// aapt resource value: 0x7f0a002a
-			public const int icon_group = 2131361834;
+			// aapt resource value: 0x7f0a002c
+			public const int icon = 2131361836;
+			
+			// aapt resource value: 0x7f0a0030
+			public const int icon_group = 2131361840;
 			
 			// aapt resource value: 0x7f0a0008
 			public const int icon_only = 2131361800;
 			
-			// aapt resource value: 0x7f0a0025
-			public const int info = 2131361829;
+			// aapt resource value: 0x7f0a002b
+			public const int info = 2131361835;
 			
 			// aapt resource value: 0x7f0a0011
 			public const int italic = 2131361809;
@@ -438,17 +450,17 @@ namespace RallyUp
 			// aapt resource value: 0x7f0a0013
 			public const int loginErrorBox = 2131361811;
 			
-			// aapt resource value: 0x7f0a001e
-			public const int media_actions = 2131361822;
+			// aapt resource value: 0x7f0a0024
+			public const int media_actions = 2131361828;
 			
-			// aapt resource value: 0x7f0a0030
-			public const int newPassBox = 2131361840;
+			// aapt resource value: 0x7f0a0036
+			public const int newPassBox = 2131361846;
 			
-			// aapt resource value: 0x7f0a0031
-			public const int newRegisterButton = 2131361841;
+			// aapt resource value: 0x7f0a0037
+			public const int newRegisterButton = 2131361847;
 			
-			// aapt resource value: 0x7f0a002f
-			public const int newUserBox = 2131361839;
+			// aapt resource value: 0x7f0a0035
+			public const int newUserBox = 2131361845;
 			
 			// aapt resource value: 0x7f0a0007
 			public const int none = 2131361799;
@@ -456,41 +468,47 @@ namespace RallyUp
 			// aapt resource value: 0x7f0a0012
 			public const int normal = 2131361810;
 			
-			// aapt resource value: 0x7f0a0028
-			public const int notification_background = 2131361832;
+			// aapt resource value: 0x7f0a002e
+			public const int notification_background = 2131361838;
 			
-			// aapt resource value: 0x7f0a0021
-			public const int notification_main_column = 2131361825;
+			// aapt resource value: 0x7f0a0027
+			public const int notification_main_column = 2131361831;
 			
-			// aapt resource value: 0x7f0a0020
-			public const int notification_main_column_container = 2131361824;
+			// aapt resource value: 0x7f0a0026
+			public const int notification_main_column_container = 2131361830;
 			
 			// aapt resource value: 0x7f0a0015
 			public const int passBox = 2131361813;
 			
-			// aapt resource value: 0x7f0a002c
-			public const int pingButton = 2131361836;
+			// aapt resource value: 0x7f0a0032
+			public const int pingButton = 2131361842;
+			
+			// aapt resource value: 0x7f0a0018
+			public const int rallyButton = 2131361816;
 			
 			// aapt resource value: 0x7f0a0017
 			public const int registerButton = 2131361815;
 			
+			// aapt resource value: 0x7f0a0033
+			public const int registrationErrorBox = 2131361843;
+			
 			// aapt resource value: 0x7f0a002d
-			public const int registrationErrorBox = 2131361837;
+			public const int right_icon = 2131361837;
 			
-			// aapt resource value: 0x7f0a0027
-			public const int right_icon = 2131361831;
+			// aapt resource value: 0x7f0a0028
+			public const int right_side = 2131361832;
 			
-			// aapt resource value: 0x7f0a0022
-			public const int right_side = 2131361826;
+			// aapt resource value: 0x7f0a0034
+			public const int screenNameBox = 2131361844;
 			
-			// aapt resource value: 0x7f0a002e
-			public const int screenNameBox = 2131361838;
+			// aapt resource value: 0x7f0a001a
+			public const int settingsButton = 2131361818;
 			
 			// aapt resource value: 0x7f0a0009
 			public const int standard = 2131361801;
 			
-			// aapt resource value: 0x7f0a001d
-			public const int status_bar_latest_event_content = 2131361821;
+			// aapt resource value: 0x7f0a0023
+			public const int status_bar_latest_event_content = 2131361827;
 			
 			// aapt resource value: 0x7f0a0002
 			public const int text = 2131361794;
@@ -498,8 +516,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f0a0003
 			public const int text2 = 2131361795;
 			
-			// aapt resource value: 0x7f0a0023
-			public const int time = 2131361827;
+			// aapt resource value: 0x7f0a0029
+			public const int time = 2131361833;
 			
 			// aapt resource value: 0x7f0a0004
 			public const int title = 2131361796;
@@ -549,55 +567,58 @@ namespace RallyUp
 			public const int Main = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int notification_action = 2130903041;
+			public const int Menu = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int notification_action_tombstone = 2130903042;
+			public const int notification_action = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int notification_media_action = 2130903043;
+			public const int notification_action_tombstone = 2130903043;
 			
 			// aapt resource value: 0x7f030004
-			public const int notification_media_cancel_action = 2130903044;
+			public const int notification_media_action = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int notification_template_big_media = 2130903045;
+			public const int notification_media_cancel_action = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int notification_template_big_media_custom = 2130903046;
+			public const int notification_template_big_media = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int notification_template_big_media_narrow = 2130903047;
+			public const int notification_template_big_media_custom = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int notification_template_big_media_narrow_custom = 2130903048;
+			public const int notification_template_big_media_narrow = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int notification_template_custom_big = 2130903049;
+			public const int notification_template_big_media_narrow_custom = 2130903049;
 			
 			// aapt resource value: 0x7f03000a
-			public const int notification_template_icon_group = 2130903050;
+			public const int notification_template_custom_big = 2130903050;
 			
 			// aapt resource value: 0x7f03000b
-			public const int notification_template_lines_media = 2130903051;
+			public const int notification_template_icon_group = 2130903051;
 			
 			// aapt resource value: 0x7f03000c
-			public const int notification_template_media = 2130903052;
+			public const int notification_template_lines_media = 2130903052;
 			
 			// aapt resource value: 0x7f03000d
-			public const int notification_template_media_custom = 2130903053;
+			public const int notification_template_media = 2130903053;
 			
 			// aapt resource value: 0x7f03000e
-			public const int notification_template_part_chronometer = 2130903054;
+			public const int notification_template_media_custom = 2130903054;
 			
 			// aapt resource value: 0x7f03000f
-			public const int notification_template_part_time = 2130903055;
+			public const int notification_template_part_chronometer = 2130903055;
 			
 			// aapt resource value: 0x7f030010
-			public const int PingPage = 2130903056;
+			public const int notification_template_part_time = 2130903056;
 			
 			// aapt resource value: 0x7f030011
-			public const int RegistrationPage = 2130903057;
+			public const int PingPage = 2130903057;
+			
+			// aapt resource value: 0x7f030012
+			public const int RegistrationPage = 2130903058;
 			
 			static Layout()
 			{

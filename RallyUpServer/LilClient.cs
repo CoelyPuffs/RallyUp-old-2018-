@@ -16,17 +16,14 @@ using RallyUpLibrary;
 
 namespace RallyUpServer
 {
-    // This is the client handler on the server side. 
     class LilClient
     {
         private TcpClient clientSocket;
-        //private string clientName;
         private static string connection = @"Server=(localdb)\MSSQLLocalDB;Database=RallyUpDB;Trusted_Connection=True;ConnectRetryCount=0";
         SqlConnection sqlConnection1 = new SqlConnection(connection);
 
         public LilClient(TcpClient clientSocket)
         {
-            //this.clientName = clientName;
             this.clientSocket = clientSocket;
         }
 

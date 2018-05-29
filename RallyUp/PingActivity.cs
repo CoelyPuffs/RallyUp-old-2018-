@@ -22,14 +22,11 @@ namespace RallyUp
             SetContentView(Resource.Layout.PingPage);
             ActionBar.Hide();
 
-            // Locate ping button
             Button pingButton = FindViewById<Button>(Resource.Id.pingButton);
 
-            // Connect to Rally Up Server
             try
             {
-                socket = new TcpClient("10.0.0.2", 3292);
-                //socket.WriteString("Jane");
+                socket = new TcpClient("192.168.87.44", 3292);
             }
             catch
             {
