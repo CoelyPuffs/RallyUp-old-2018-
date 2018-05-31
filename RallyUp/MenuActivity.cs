@@ -21,7 +21,12 @@ namespace RallyUp
             SetContentView(Resource.Layout.Menu);
             ActionBar.Hide();
 
-            // Create your application here
+            Button friendButton = FindViewById<Button>(Resource.Id.friendButton);
+
+            friendButton.Click += delegate
+            {
+                StartActivity(typeof(FriendsActivity));
+            };
         }
     }
 }
