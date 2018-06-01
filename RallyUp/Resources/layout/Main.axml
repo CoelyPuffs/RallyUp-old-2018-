@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:textSize="32sp" />
     <TextView
-        android:text =" "
+        android:text=" "
         android:id="@+id/loginErrorBox"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"

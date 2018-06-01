@@ -33,11 +33,15 @@ namespace RallyUpServer
             {
                 string clientData = clientSocket.ReadString();
                 Console.WriteLine(clientData);
+
+                // Ping Function
                 if (clientData == "Ping")
                 {
                     System.Threading.Thread.Sleep(5000);
                     SendPushNotification();
                 }
+
+                // Registration
                 else if (clientData.Split(':')[0] == "Register")
                 {
                     string potentialUsername = clientData.Split(':')[1];
@@ -53,6 +57,8 @@ namespace RallyUpServer
                         Console.WriteLine("UsernameAlreadyRegistered: " + potentialUsername);
                     }
                 }
+
+                // Login
                 else if (clientData.Split(':')[0] == "Login")
                 {
                     string username = clientData.Split(':')[1];
@@ -89,6 +95,60 @@ namespace RallyUpServer
                         Console.WriteLine(username + " not found");
                     }
                     sqlConnection1.Close();
+                }
+
+                // Return list of friends
+                else if(clientData.Split(':')[0] == "GetFriends")
+                {
+                    string username = clientData.Split(':')[1];
+                    List<List<string>> friendList = new List<List<string>>();
+                    string query = "SELECT friendName FROM RallyUpFriend WHERE RallyUpFriend.username = @username";
+                    string friendInfoQuery = "SELECT screenName FROM RallyUpUser WHERE RallyUpUser.username = @friendName";
+                    SqlCommand cmd = new SqlCommand(query, sqlConnection1);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    SqlDataReader reader;
+                    sqlConnection1.Open();
+                    reader = cmd.ExecuteReader();
+                    int i = 0;
+                    while (reader.Read())
+                    {
+                        friendList[i][0] = (reader.GetValue(0)).ToString();
+                        i++;
+                    }
+                    foreach(List<string> friend in friendList)
+                    {
+                        SqlCommand cmd2 = new SqlCommand(friendInfoQuery, sqlConnection1);
+                        cmd.Parameters.AddWithValue("@friendName", friend[0]);
+                        reader = cmd2.ExecuteReader();
+                        reader.Read();
+                        friend[1] = reader.GetValue(0).ToString();
+                    }
+                    string friendListString = "";
+                    foreach (List<string> friend in friendList)
+                    {
+                        friendListString += friend[0] + ':' + friend[1] +  '/';
+                    }
+                    clientSocket.WriteString(friendListString);
+                }
+                else if(clientData.Split(':')[0] == "AddFriend")
+                {
+                    string username = clientData.Split(':')[1];
+                    string friendName = clientData.Split(':')[2];
+                    string insertQuery = "INSERT INTO RallyUpFriend VALUES (@username, @friendName)";
+                    SqlCommand cmd = new SqlCommand(insertQuery, sqlConnection1);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@friendName", friendName);
+                    int readResult;
+                    sqlConnection1.Open();
+                    readResult = cmd.ExecuteNonQuery();
+                    if (readResult == 1)
+                    {
+                        clientSocket.WriteString("FriendAdded");
+                    }
+                    else
+                    {
+                        clientSocket.WriteString("ErrorAddingFriend");
+                    }
                 }
             }
             catch (Exception ex)

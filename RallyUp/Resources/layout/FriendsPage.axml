@@ -11,7 +11,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left">
+            android:gravity="left"
+            android:layout_weight="1">
             <Button
                 android:text="Back"
                 android:id="@+id/friendsBackButton"
@@ -22,7 +23,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right">
+            android:gravity="right"
+            android:layout_weight="1">
             <Button
                 android:text="+ Add Friend"
                 android:id="@+id/newFriendButton"
