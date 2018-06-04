@@ -114,21 +114,6 @@ namespace RallyUp
         }
     }
 
-    public class FriendViewModel
-    {
-        private string friendName;
-
-        public FriendViewModel(string friendName)
-        {
-            this.friendName = friendName;
-        }
-
-        public string getFriendName()
-        {
-            return this.friendName;
-        }
-    }
-
     public class FriendlyAdapter : RecyclerView.Adapter
     {
         IList<Friend> friends;

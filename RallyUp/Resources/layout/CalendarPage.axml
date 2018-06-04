@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <CalendarView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <TextView
+        android:id="@+id/eventBox"
+        android:text="No events planned yet"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center" />
+    <Button
+        android:id="@+id/personalEventButton"
+        android:text="Add a personal event"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <Button
+        android:id="@+id/groupEventButton"
+        android:text="Plan an event with friends"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+</LinearLayout>
