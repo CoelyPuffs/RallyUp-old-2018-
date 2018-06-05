@@ -58,29 +58,25 @@ namespace RallyUp
             IList<Friend> friendList = new List<Friend>();
             try
             {
-                socket = new TcpClient("192.168.87.44", 3292);
+                socket = new TcpClient("192.168.1.2", 3292);
                 socket.ReceiveTimeout = 1000;
                 socket.WriteString("GetFriends:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
                 string friendListString = socket.ReadString();
                 string[] firstList = friendListString.Split('/');
                 List<Friend> friendDataList = new List<Friend>();
-                foreach (string friend in firstList)
-                {
-                    friendDataList.Add(new Friend(friend.Split(':')[1], friend.Split(':')[0]));
+                if (firstList.Length > 0)
+                { 
+                    firstList  = firstList.Take(firstList.Count() - 1).ToArray();
+                    foreach (string friend in firstList)
+                    {
+                        friendDataList.Add(new Friend(friend.Split(':')[1], friend.Split(':')[0]));
+                    }
                 }
                 friendList = friendDataList;
             }
             catch
             {
-                friendList.Add(new Friend("April", "May"));
-                friendList.Add(new Friend("Davy Jones", "Poseidon"));
-                friendList.Add(new Friend("Chilly Girl", "Alysia"));
-                friendList.Add(new Friend("NomNom", "Chomper"));
-                friendList.Add(new Friend("Tuxy", "Tusky"));
-                friendList.Add(new Friend("Daisy Bennet", "Skye"));
-                friendList.Add(new Friend("Asami Whats Her Last Name", "FutureIndustries"));
-                friendList.Add(new Friend("Willow You Hold Me", "LetMeGo"));
-                friendList.Add(new Friend("Coely Puffs", "isLost"));
+
             }
             /*
             friendList.Add(new Friend("April", "May"));

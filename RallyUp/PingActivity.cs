@@ -26,7 +26,7 @@ namespace RallyUp
 
             try
             {
-                socket = new TcpClient("192.168.87.44", 3292);
+                socket = new TcpClient("192.168.1.2", 3292);
             }
             catch
             {

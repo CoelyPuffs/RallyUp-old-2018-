@@ -2215,11 +2215,14 @@ namespace RallyUp
 			// aapt resource value: 0x7f090078
 			public const int loginErrorBox = 2131296376;
 			
+			// aapt resource value: 0x7f0900a3
+			public const int logoutButton = 2131296419;
+			
 			// aapt resource value: 0x7f09008a
 			public const int media_actions = 2131296394;
 			
-			// aapt resource value: 0x7f0900a3
-			public const int message = 2131296419;
+			// aapt resource value: 0x7f0900a4
+			public const int message = 2131296420;
 			
 			// aapt resource value: 0x7f09002c
 			public const int middle = 2131296300;
@@ -2668,10 +2671,13 @@ namespace RallyUp
 			public const int select_dialog_singlechoice_material = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int support_simple_spinner_dropdown_item = 2130903094;
+			public const int SettingsPage = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int tooltip = 2130903095;
+			public const int support_simple_spinner_dropdown_item = 2130903095;
+			
+			// aapt resource value: 0x7f030038
+			public const int tooltip = 2130903096;
 			
 			static Layout()
 			{

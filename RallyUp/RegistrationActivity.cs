@@ -37,7 +37,7 @@ namespace RallyUp
             {
                 try
                 {
-                    socket = new TcpClient("192.168.87.44", 3292);
+                    socket = new TcpClient("192.168.1.2", 3292);
                     socket.WriteString("Register:" + newUserBox.Text + ':' + newPassBox.Text + ':' + screenNameBox.Text);
                     errorBox.Text = "";
                     if (socket.ReadString() == "RegistrationSuccessful")
@@ -49,6 +49,7 @@ namespace RallyUp
                         prefsEditor.PutString("currentUsername", newUserBox.Text);
                         prefsEditor.PutString("currentPassword", newPassBox.Text);
                         prefsEditor.PutBoolean("isAuthenticated", true);
+                        prefsEditor.Commit();
                         this.Finish();
                     }
                     else if (socket.ReadString() == "UsernameAlreadyRegistered")

@@ -106,29 +106,44 @@ namespace RallyUpServer
                     string friendInfoQuery = "SELECT screenName FROM RallyUpUser WHERE RallyUpUser.username = @friendName";
                     SqlCommand cmd = new SqlCommand(query, sqlConnection1);
                     cmd.Parameters.AddWithValue("@username", username);
-                    SqlDataReader reader;
-                    sqlConnection1.Open();
-                    reader = cmd.ExecuteReader();
-                    int i = 0;
-                    while (reader.Read())
+                    try
                     {
-                        friendList[i][0] = (reader.GetValue(0)).ToString();
-                        i++;
+                        SqlDataReader reader;
+                        
+                        sqlConnection1.Open();
+                        reader = cmd.ExecuteReader();
+                        int i = 0;
+                        while (reader.Read())
+                        {
+                            friendList.Add(new List<string>());
+                            friendList[i].Add((reader.GetValue(0)).ToString());
+                            i++;
+                        }
+                        reader.Close();
+                        foreach (List<string> friend in friendList)
+                        {
+                            cmd = new SqlCommand(friendInfoQuery, sqlConnection1);
+                            cmd.Parameters.AddWithValue("@friendName", friend[0]);
+                            reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                friend.Add(reader.GetValue(0).ToString());
+                            }
+                            reader.Close();
+                        }
+                        string friendListString = "";
+                        foreach (List<string> friend in friendList)
+                        {
+                            friendListString += friend[0] + ':' + friend[1] + '/';
+                        }
+                        clientSocket.WriteString(friendListString);
+                        Console.WriteLine(friendListString);
                     }
-                    foreach(List<string> friend in friendList)
+                    catch
                     {
-                        SqlCommand cmd2 = new SqlCommand(friendInfoQuery, sqlConnection1);
-                        cmd.Parameters.AddWithValue("@friendName", friend[0]);
-                        reader = cmd2.ExecuteReader();
-                        reader.Read();
-                        friend[1] = reader.GetValue(0).ToString();
+                        clientSocket.WriteString("FriendsNotFound");
+                        Console.WriteLine("FriendsNotFound");
                     }
-                    string friendListString = "";
-                    foreach (List<string> friend in friendList)
-                    {
-                        friendListString += friend[0] + ':' + friend[1] +  '/';
-                    }
-                    clientSocket.WriteString(friendListString);
                 }
                 else if(clientData.Split(':')[0] == "AddFriend")
                 {

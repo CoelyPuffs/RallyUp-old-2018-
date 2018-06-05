@@ -30,7 +30,8 @@ namespace RallyUp
             ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
             if (userPrefs.GetBoolean("isAuthenticated", false) == true)
             {
-                StartActivity(typeof (PingActivity));
+                StartActivity(typeof (MenuActivity));
+                this.Finish();
             }
 
             TextView errorBox = FindViewById<TextView>(Resource.Id.loginErrorBox);
@@ -44,12 +45,13 @@ namespace RallyUp
                 if (userBox.Text == "boop")
                 {
                     StartActivity(typeof(MenuActivity));
+                    this.Finish();
                 }
                 else
                 {
                     try
                     {
-                        socket = new TcpClient("192.168.87.44", 3292);
+                        socket = new TcpClient("192.168.1.2", 3292);
                         socket.ReceiveTimeout = 1000;
                         errorBox.Text = "";
                         socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
@@ -57,6 +59,7 @@ namespace RallyUp
                         if (returnString == "ValidCredentials")
                         {
                             StartActivity(typeof(MenuActivity));
+                            this.Finish();
                         }
                         else if (returnString == "BadPassword")
                         {
