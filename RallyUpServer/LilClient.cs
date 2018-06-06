@@ -38,7 +38,7 @@ namespace RallyUpServer
                 if (clientData == "Ping")
                 {
                     System.Threading.Thread.Sleep(5000);
-                    SendPushNotification();
+                    SendPushNotification("Testing", "Ponging", "Pingster");
                 }
 
                 // Registration
@@ -165,6 +165,16 @@ namespace RallyUpServer
                         clientSocket.WriteString("ErrorAddingFriend");
                     }
                 }
+                else if(clientData.Split(':')[0] == "Rally")
+                {
+                    string senderName = clientData.Split(':')[1];
+                    string tagline = clientData.Split(':')[2];
+                    List<string> recipients = new List<string>();
+                    for (int i = 3; i < clientData.Split(':').Length; i++)
+                    {
+                        SendPushNotification(clientData.Split(':')[i], tagline, senderName);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -173,7 +183,7 @@ namespace RallyUpServer
         }
 
         // Function from https://stackoverflow.com/questions/37412963/send-push-to-android-by-c-sharp-using-fcm-firebase-cloud-messaging
-        public static void SendPushNotification()
+        public static void SendPushNotification(string notifyTopic, string notifyBody, string notifySender)
         {
             string str;
             try
@@ -186,11 +196,11 @@ namespace RallyUpServer
                 tRequest.ContentType = "application/json";
                 var data = new
                 {
-                    to = "/topics/Testing",
+                    to = "/topics/" + notifyTopic,
                     notification = new
                     {
-                        body = "Ponging",
-                        title = "Pong",
+                        body = "Rally " + notifyBody,
+                        title = "New Rally from " + notifySender,
                         sound = "Enabled"
                     }
                 };

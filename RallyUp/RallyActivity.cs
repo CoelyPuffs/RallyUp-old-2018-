@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net.Sockets;
 
 using Android.App;
 using Android.Content;
@@ -10,6 +11,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
+using Android.Preferences;
+
+using RallyUpLibrary;
 
 namespace RallyUp
 {
@@ -37,7 +41,7 @@ namespace RallyUp
 
             rallyBackButton.Click += delegate
             {
-                this.Finish();
+                Finish();
             };
         }
 
@@ -99,19 +103,51 @@ namespace RallyUp
         public ImageView rallyFlagImage;
         public TextView rallyTaglineBox;
         public Button rallyWhoButton;
+        private TextView rallyErrorBox;
+        public Button sendRallyButton;
+        private string selectedFriendList = "";
 
         public RallyViewHolder(View itemView) : base(itemView)
         {
             rallyFlagImage = itemView.FindViewById<ImageView>(Resource.Id.rallyFlagImage);
             rallyTaglineBox = itemView.FindViewById<TextView>(Resource.Id.rallyTaglineBox);
             rallyWhoButton = itemView.FindViewById<Button>(Resource.Id.rallyWhatFriendsButton);
+            rallyErrorBox = itemView.FindViewById<TextView>(Resource.Id.rallyErrorBox);
+            sendRallyButton = itemView.FindViewById<Button>(Resource.Id.sendRallyButton);
 
             rallyWhoButton.Click += delegate
             {
                 var intent = new Intent(ItemView.Context, typeof(SelectFriendsActivity));
                 intent.PutExtra("FriendsSelected", "Data from Activity1");
                 itemView.Context.StartActivity(intent);
-                string selectedFriendList = intent.GetStringExtra("SelectedFriendsList");
+                selectedFriendList = intent.GetStringExtra("SelectedFriendsList");
+            };
+
+            sendRallyButton.Click += delegate
+            {
+                if (selectedFriendList == "")
+                {
+                    rallyErrorBox.Text = "No friends selected";
+                    var intent = new Intent(ItemView.Context, typeof(SelectFriendsActivity));
+                    intent.PutExtra("FriendsSelected", "Data from Activity1");
+                    itemView.Context.StartActivity(intent);
+                    selectedFriendList = intent.GetStringExtra("SelectedFriendsList");
+                }
+                else
+                {
+                    try
+                    {
+                        TcpClient socket = new TcpClient("192.168.1.2", 3292);
+                        socket.ReceiveTimeout = 1000;
+                        //Change this to send the screen name
+                        socket.WriteString("Rally:" + PreferenceManager.GetDefaultSharedPreferences(ItemView.Context).GetString("currentUsername", "") + ':' + rallyTaglineBox.Text + ':' +  selectedFriendList);
+                        rallyErrorBox.Text = "Rallying!";
+                    }
+                    catch
+                    {
+                        rallyErrorBox.Text = "Connection to server failed. Make sure you are online.";
+                    }
+                }
             };
         }
     }
