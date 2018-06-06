@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Net;
 using System.Net.Sockets;
 
 using Android.App;
@@ -13,47 +12,50 @@ using Android.Views;
 using Android.Widget;
 using Android.Preferences;
 using Android.Support.V7.Widget;
+using Android.Graphics;
 
 using RallyUpLibrary;
 
 namespace RallyUp
 {
-    [Activity(Label = "FriendsActivity")]
-    public class FriendsActivity : Activity
+    [Activity(Label = "SelectFriendsActivity")]
+    public class SelectFriendsActivity : Activity
     {
         private TcpClient socket;
+        string selectedFriends = "";
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.FriendsPage);
+            SetContentView(Resource.Layout.SelectFriendsPage);
             ActionBar.Hide();
 
-            Button backButton = FindViewById<Button>(Resource.Id.friendsBackButton);
-            Button addFriendButton = FindViewById<Button>(Resource.Id.newFriendButton);
+            Button doneButton = FindViewById<Button>(Resource.Id.doneButton);
 
-            backButton.Click += delegate
+            SelectFriendAdapter adapter = new SelectFriendAdapter(getLocalFriends());
+            RecyclerView selectFriendsView = FindViewById<RecyclerView>(Resource.Id.selectFriendsView);
+            selectFriendsView.HasFixedSize = true;
+            selectFriendsView.SetLayoutManager(new LinearLayoutManager(this));
+            selectFriendsView.SetAdapter(adapter);
+
+            doneButton.Click += delegate
             {
-                this.Finish();
+                foreach (SelectFriendViewHolder friend in adapter.friendBoxes)
+                {
+                    if (friend.isSelected)
+                    {
+                        selectedFriends += (friend.nameBox.Text + ':');
+                    }
+                }
+
+                Intent myIntent = new Intent(this, typeof(RallyActivity));
+                myIntent.PutExtra("SelectedFriendsList", selectedFriends);
+                SetResult(Result.Ok, myIntent);
+                Finish();
             };
-
-            FriendlyAdapter adapter = new FriendlyAdapter(makeFriends());
-            RecyclerView friendList = FindViewById<RecyclerView>(Resource.Id.friendList);
-            friendList.HasFixedSize = true;
-            friendList.SetLayoutManager(new LinearLayoutManager(this));
-            friendList.SetAdapter(adapter);
-
-            addFriendButton.Click += delegate
-            {
-                StartActivity(typeof(AddFriendActivity));
-                adapter = new FriendlyAdapter(makeFriends());
-            };
-
-            
-            // var testAdapter = friendList.GetAdapter();
         }
 
-        private IList<Friend> makeFriends()
+        List<Friend> getLocalFriends()
         {
             IList<Friend> friendList = new List<Friend>();
             try
@@ -65,8 +67,8 @@ namespace RallyUp
                 string[] firstList = friendListString.Split('/');
                 List<Friend> friendDataList = new List<Friend>();
                 if (firstList.Length > 0)
-                { 
-                    firstList  = firstList.Take(firstList.Count() - 1).ToArray();
+                {
+                    firstList = firstList.Take(firstList.Count() - 1).ToArray();
 
                     ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
                     ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
@@ -79,7 +81,7 @@ namespace RallyUp
                         friendDataList.Add(new Friend(friend.Split(':')[1], friend.Split(':')[0]));
                     }
                 }
-                friendList = friendDataList;
+                return friendDataList;
             }
             catch
             {
@@ -97,38 +99,15 @@ namespace RallyUp
                     return new List<Friend>();
                 }
             }
-            /*
-            friendList.Add(new Friend("April", "May"));
-            friendList.Add(new Friend("Davy Jones", "Poseidon"));
-            friendList.Add(new Friend("Chilly Girl", "Alysia"));
-            friendList.Add(new Friend("NomNom", "Chomper"));
-            friendList.Add(new Friend("Tuxy", "Tusky"));
-            friendList.Add(new Friend("Daisy Bennet", "Skye"));
-            friendList.Add(new Friend("Asami Whats Her Last Name", "FutureIndustries"));
-            friendList.Add(new Friend("Willow You Hold Me", "LetMeGo"));
-            friendList.Add(new Friend("Coely Puffs", "isLost"));
-            */
-            return friendList;
         }
     }
 
-    public class Friend
+    public class SelectFriendAdapter : RecyclerView.Adapter
     {
-        public string screenName;
-        private string username;
+        IList<Friend> friends = new List<Friend>();
+        public List<SelectFriendViewHolder> friendBoxes = new List<SelectFriendViewHolder>();
 
-        public Friend(string screenName, string username)
-        {
-            this.screenName = screenName;
-            this.username = username;
-        }
-    }
-
-    public class FriendlyAdapter : RecyclerView.Adapter
-    {
-        IList<Friend> friends;
-
-        public FriendlyAdapter(IList<Friend> friends)
+        public SelectFriendAdapter(IList<Friend> friends)
         {
             this.friends = friends;
         }
@@ -136,14 +115,15 @@ namespace RallyUp
         override public RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.oneFriend, parent, false);
-            return new FriendViewHolder(itemView);
+            return new SelectFriendViewHolder(itemView);
         }
 
         override public void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            FriendViewHolder fvh = holder as FriendViewHolder;
-            fvh.flagBox.SetImageResource(Resource.Drawable.icon);
-            fvh.nameBox.Text = friends[position].screenName;
+            SelectFriendViewHolder sfvh = holder as SelectFriendViewHolder;
+            friendBoxes.Add(sfvh);
+            sfvh.flagBox.SetImageResource(Resource.Drawable.icon);
+            sfvh.nameBox.Text = friends[position].screenName;
         }
 
         override public int ItemCount
@@ -152,15 +132,32 @@ namespace RallyUp
         }
     }
 
-    public class FriendViewHolder : RecyclerView.ViewHolder
+    public class SelectFriendViewHolder : RecyclerView.ViewHolder
     {
         public ImageView flagBox;
         public TextView nameBox;
+        public Boolean isSelected = false;
 
-        public FriendViewHolder(View itemView) : base(itemView)
+        public SelectFriendViewHolder(View itemView) : base(itemView)
         {
             flagBox = ItemView.FindViewById<ImageView>(Resource.Id.flagBox);
             nameBox = itemView.FindViewById<TextView>(Resource.Id.nameBox);
+
+            itemView.SetBackgroundColor(Color.Gray);
+
+            ItemView.Click += delegate
+            {
+                if (isSelected)
+                {
+                    itemView.SetBackgroundColor(Color.Gray);
+                    isSelected = false;
+                }
+                else
+                {
+                    itemView.SetBackgroundColor(Color.Blue);
+                    isSelected = true;
+                }
+            };
         }
     }
 }

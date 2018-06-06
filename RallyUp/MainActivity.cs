@@ -12,6 +12,8 @@ using Android.Views;
 using Android.Widget;
 using Android.Preferences;
 
+using Firebase.Messaging;
+
 using RallyUpLibrary;
 
 namespace RallyUp
@@ -58,6 +60,7 @@ namespace RallyUp
                         string returnString = socket.ReadString();
                         if (returnString == "ValidCredentials")
                         {
+                            FirebaseMessaging.Instance.SubscribeToTopic(userBox.Text);
                             StartActivity(typeof(MenuActivity));
                             this.Finish();
                         }

@@ -14,4 +14,14 @@
         android:id="@+id/rallyFlagImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/rallyDurationButton"
+        android:text="Rally Duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/rallyWhatFriendsButton"
+        android:text="Rally Who?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

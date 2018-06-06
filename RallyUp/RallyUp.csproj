@@ -129,6 +129,7 @@
     <Compile Include="PingActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectFriendsActivity.cs" />
     <Compile Include="SettingsActivity.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +209,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\SettingsPage.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\SelectFriendsPage.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

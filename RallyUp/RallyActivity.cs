@@ -96,13 +96,23 @@ namespace RallyUp
 
     public class RallyViewHolder : RecyclerView.ViewHolder
     {
-        public ImageView rallyFlagImage { get; private set; }
-        public TextView rallyTaglineBox { get; private set; }
+        public ImageView rallyFlagImage;
+        public TextView rallyTaglineBox;
+        public Button rallyWhoButton;
 
         public RallyViewHolder(View itemView) : base(itemView)
         {
             rallyFlagImage = itemView.FindViewById<ImageView>(Resource.Id.rallyFlagImage);
             rallyTaglineBox = itemView.FindViewById<TextView>(Resource.Id.rallyTaglineBox);
+            rallyWhoButton = itemView.FindViewById<Button>(Resource.Id.rallyWhatFriendsButton);
+
+            rallyWhoButton.Click += delegate
+            {
+                var intent = new Intent(ItemView.Context, typeof(SelectFriendsActivity));
+                intent.PutExtra("FriendsSelected", "Data from Activity1");
+                itemView.Context.StartActivity(intent);
+                string selectedFriendList = intent.GetStringExtra("SelectedFriendsList");
+            };
         }
     }
 }

@@ -27,9 +27,15 @@ namespace RallyUp
             SetContentView(Resource.Layout.AddFriendPage);
             ActionBar.Hide();
 
+            Button addFriendBackButton = FindViewById<Button>(Resource.Id.addFriendBackButton);
             TextView addFriendErrorBox = FindViewById<TextView>(Resource.Id.addFriendErrorBox);
             EditText friendNameBox = FindViewById<EditText>(Resource.Id.friendNameBox);
             Button addFriendUsernameButton = FindViewById<Button>(Resource.Id.addFriendUsernameButton);
+
+            addFriendBackButton.Click += delegate
+            {
+                this.Finish();
+            };
 
             addFriendUsernameButton.Click += delegate
             {
