@@ -13,12 +13,13 @@ using Android.Views;
 using Android.Widget;
 using Android.Preferences;
 using Android.Support.V7.Widget;
+using Android.Content.PM;
 
 using RallyUpLibrary;
 
 namespace RallyUp
 {
-    [Activity(Label = "FriendsActivity")]
+    [Activity(Label = "FriendsActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class FriendsActivity : Activity
     {
         private TcpClient socket;

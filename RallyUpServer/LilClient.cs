@@ -38,7 +38,7 @@ namespace RallyUpServer
                 if (clientData == "Ping")
                 {
                     System.Threading.Thread.Sleep(5000);
-                    SendPushNotification("Testing", "Ponging", "Pingster");
+                    SendRallyNotification("Testing", "Ponging", "Pingster");
                 }
 
                 // Registration
@@ -149,20 +149,31 @@ namespace RallyUpServer
                 {
                     string username = clientData.Split(':')[1];
                     string friendName = clientData.Split(':')[2];
+                    string checkExistsQuery = "SELECT username FROM RallyUpUser WHERE username = @friendName";
                     string insertQuery = "INSERT INTO RallyUpFriend VALUES (@username, @friendName)";
-                    SqlCommand cmd = new SqlCommand(insertQuery, sqlConnection1);
+                    SqlCommand cmd = new SqlCommand(checkExistsQuery, sqlConnection1);
                     cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@friendName", friendName);
-                    int readResult;
                     sqlConnection1.Open();
-                    readResult = cmd.ExecuteNonQuery();
-                    if (readResult == 1)
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
                     {
-                        clientSocket.WriteString("FriendAdded");
+                        cmd = new SqlCommand(insertQuery, sqlConnection1);
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@friendName", friendName);
+                        int readResult;
+                        readResult = cmd.ExecuteNonQuery();
+                        if (readResult == 1)
+                        {
+                            clientSocket.WriteString("FriendAdded");
+                        }
+                        else
+                        {
+                            clientSocket.WriteString("ErrorAddingFriend");
+                        }
                     }
                     else
                     {
-                        clientSocket.WriteString("ErrorAddingFriend");
+                        clientSocket.WriteString("FriendNotExist");
                     }
                 }
                 else if(clientData.Split(':')[0] == "Rally")
@@ -172,7 +183,7 @@ namespace RallyUpServer
                     List<string> recipients = new List<string>();
                     for (int i = 3; i < clientData.Split(':').Length; i++)
                     {
-                        SendPushNotification(clientData.Split(':')[i], tagline, senderName);
+                        SendRallyNotification(clientData.Split(':')[i], tagline, senderName);
                     }
                 }
             }
@@ -183,7 +194,7 @@ namespace RallyUpServer
         }
 
         // Function from https://stackoverflow.com/questions/37412963/send-push-to-android-by-c-sharp-using-fcm-firebase-cloud-messaging
-        public static void SendPushNotification(string notifyTopic, string notifyBody, string notifySender)
+        public static void SendRallyNotification(string notifyTopic, string notifyBody, string notifySender)
         {
             string str;
             try
@@ -199,7 +210,7 @@ namespace RallyUpServer
                     to = "/topics/" + notifyTopic,
                     notification = new
                     {
-                        body = "Rally " + notifyBody,
+                        body = notifyBody,
                         title = "New Rally from " + notifySender,
                         sound = "Enabled"
                     }

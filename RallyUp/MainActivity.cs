@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Preferences;
+using Android.Content.PM;
 
 using Firebase.Messaging;
 
@@ -18,7 +19,7 @@ using RallyUpLibrary;
 
 namespace RallyUp
 {
-    [Activity(Label = "RallyUp", MainLauncher = true)]
+    [Activity(Label = "RallyUp", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
         private TcpClient socket;
@@ -32,7 +33,7 @@ namespace RallyUp
             ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
             if (userPrefs.GetBoolean("isAuthenticated", false) == true)
             {
-                StartActivity(typeof (MenuActivity));
+                StartActivity(typeof (RallyActivity));
                 this.Finish();
             }
 
@@ -60,8 +61,13 @@ namespace RallyUp
                         string returnString = socket.ReadString();
                         if (returnString == "ValidCredentials")
                         {
+                            ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
+                            prefsEditor.PutString("currentUsername", userBox.Text);
+                            prefsEditor.PutString("currentPassword", passBox.Text);
+                            prefsEditor.PutBoolean("isAuthenticated", true);
+                            prefsEditor.Commit();
                             FirebaseMessaging.Instance.SubscribeToTopic(userBox.Text);
-                            StartActivity(typeof(MenuActivity));
+                            StartActivity(typeof(RallyActivity));
                             this.Finish();
                         }
                         else if (returnString == "BadPassword")
@@ -85,6 +91,18 @@ namespace RallyUp
             {
                 StartActivity(typeof(RegistrationActivity));
             };
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
+            if (userPrefs.GetBoolean("isAuthenticated", false) == true)
+            {
+                StartActivity(typeof(RallyActivity));
+                this.Finish();
+            }
         }
     }
 }

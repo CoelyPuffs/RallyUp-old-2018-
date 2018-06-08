@@ -11,12 +11,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Preferences;
+using Android.Content.PM;
 
 using RallyUpLibrary;
 
 namespace RallyUp
 {
-    [Activity(Label = "Registration")]
+    [Activity(Label = "Registration", ScreenOrientation = ScreenOrientation.Portrait)]
     public class RegistrationActivity : Activity
     {
         private TcpClient socket;

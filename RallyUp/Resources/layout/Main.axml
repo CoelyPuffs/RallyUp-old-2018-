@@ -3,48 +3,64 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#ffcc66">
     <TextView
         android:text="RALLY UP!"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textSize="32sp" />
+        android:textSize="32sp"
+        android:textColor="#000000" />
     <TextView
         android:text=" "
         android:id="@+id/loginErrorBox"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginTop="60sp" />
+        android:layout_marginTop="30sp"
+        android:textColor="#000000" />
     <TextView
         android:text="Username"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginTop="20sp" />
+        android:layout_marginTop="20sp"
+        android:textColor="#000000" />
     <EditText
         android:id="@+id/userBox"
         android:inputType="textVisiblePassword"
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_width="250sp"
+        android:textColor="#000000"
+        android:background="#eeeedd" />
     <TextView
         android:text="Password"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:textColor="#000000" />
     <EditText
         android:id="@+id/passBox"
         android:inputType="textPassword"
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_width="250sp"
+        android:textColor="#000000"
+        android:background="#eeeedd" />
     <Button
         android:id="@+id/loginButton"
         android:text="Login"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginTop="15sp" />
+        android:layout_marginTop="15sp"
+        android:padding="15sp"
+        android:textColor="#000000"
+        android:background="#fcbb55" />
     <Button
         android:id="@+id/registerButton"
         android:text="New user? Click here to register"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15sp"
+        android:padding="15sp"
+        android:textColor="#000000"
+        android:background="#fcbb55" />
 </LinearLayout>

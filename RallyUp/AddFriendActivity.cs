@@ -11,12 +11,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Preferences;
+using Android.Content.PM;
 
 using RallyUpLibrary;
 
 namespace RallyUp
 {
-    [Activity(Label = "AddFriendActivity")]
+    [Activity(Label = "AddFriendActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class AddFriendActivity : Activity
     {
         public TcpClient socket;
@@ -48,6 +49,10 @@ namespace RallyUp
                     if (replyString == "FriendAdded")
                     {
                         addFriendErrorBox.Text = "Friend added!";
+                    }
+                    else if (replyString == "FriendNotExist")
+                    {
+                        addFriendErrorBox.Text = "Username not found";
                     }
                     else
                     {

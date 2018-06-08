@@ -10,10 +10,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Preferences;
+using Android.Content.PM;
 
 namespace RallyUp
 {
-    [Activity(Label = "SettingsActivity")]
+    [Activity(Label = "SettingsActivity", ScreenOrientation = ScreenOrientation.Portrait)]
     public class SettingsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

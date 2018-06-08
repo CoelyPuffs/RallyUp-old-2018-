@@ -931,44 +931,44 @@ namespace RallyUp
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f070046
-			public const int abc_background_cache_hint_selector_material_dark = 2131165254;
-			
 			// aapt resource value: 0x7f070047
-			public const int abc_background_cache_hint_selector_material_light = 2131165255;
+			public const int abc_background_cache_hint_selector_material_dark = 2131165255;
 			
 			// aapt resource value: 0x7f070048
-			public const int abc_btn_colored_borderless_text_material = 2131165256;
+			public const int abc_background_cache_hint_selector_material_light = 2131165256;
 			
 			// aapt resource value: 0x7f070049
-			public const int abc_btn_colored_text_material = 2131165257;
+			public const int abc_btn_colored_borderless_text_material = 2131165257;
 			
 			// aapt resource value: 0x7f07004a
-			public const int abc_color_highlight_material = 2131165258;
+			public const int abc_btn_colored_text_material = 2131165258;
 			
 			// aapt resource value: 0x7f07004b
-			public const int abc_hint_foreground_material_dark = 2131165259;
+			public const int abc_color_highlight_material = 2131165259;
 			
 			// aapt resource value: 0x7f07004c
-			public const int abc_hint_foreground_material_light = 2131165260;
+			public const int abc_hint_foreground_material_dark = 2131165260;
+			
+			// aapt resource value: 0x7f07004d
+			public const int abc_hint_foreground_material_light = 2131165261;
 			
 			// aapt resource value: 0x7f070008
 			public const int abc_input_method_navigation_guard = 2131165192;
 			
-			// aapt resource value: 0x7f07004d
-			public const int abc_primary_text_disable_only_material_dark = 2131165261;
-			
 			// aapt resource value: 0x7f07004e
-			public const int abc_primary_text_disable_only_material_light = 2131165262;
+			public const int abc_primary_text_disable_only_material_dark = 2131165262;
 			
 			// aapt resource value: 0x7f07004f
-			public const int abc_primary_text_material_dark = 2131165263;
+			public const int abc_primary_text_disable_only_material_light = 2131165263;
 			
 			// aapt resource value: 0x7f070050
-			public const int abc_primary_text_material_light = 2131165264;
+			public const int abc_primary_text_material_dark = 2131165264;
 			
 			// aapt resource value: 0x7f070051
-			public const int abc_search_url_text = 2131165265;
+			public const int abc_primary_text_material_light = 2131165265;
+			
+			// aapt resource value: 0x7f070052
+			public const int abc_search_url_text = 2131165266;
 			
 			// aapt resource value: 0x7f070009
 			public const int abc_search_url_text_normal = 2131165193;
@@ -979,29 +979,29 @@ namespace RallyUp
 			// aapt resource value: 0x7f07000b
 			public const int abc_search_url_text_selected = 2131165195;
 			
-			// aapt resource value: 0x7f070052
-			public const int abc_secondary_text_material_dark = 2131165266;
-			
 			// aapt resource value: 0x7f070053
-			public const int abc_secondary_text_material_light = 2131165267;
+			public const int abc_secondary_text_material_dark = 2131165267;
 			
 			// aapt resource value: 0x7f070054
-			public const int abc_tint_btn_checkable = 2131165268;
+			public const int abc_secondary_text_material_light = 2131165268;
 			
 			// aapt resource value: 0x7f070055
-			public const int abc_tint_default = 2131165269;
+			public const int abc_tint_btn_checkable = 2131165269;
 			
 			// aapt resource value: 0x7f070056
-			public const int abc_tint_edittext = 2131165270;
+			public const int abc_tint_default = 2131165270;
 			
 			// aapt resource value: 0x7f070057
-			public const int abc_tint_seek_thumb = 2131165271;
+			public const int abc_tint_edittext = 2131165271;
 			
 			// aapt resource value: 0x7f070058
-			public const int abc_tint_spinner = 2131165272;
+			public const int abc_tint_seek_thumb = 2131165272;
 			
 			// aapt resource value: 0x7f070059
-			public const int abc_tint_switch_track = 2131165273;
+			public const int abc_tint_spinner = 2131165273;
+			
+			// aapt resource value: 0x7f07005a
+			public const int abc_tint_switch_track = 2131165274;
 			
 			// aapt resource value: 0x7f07000c
 			public const int accent_material_dark = 2131165196;
@@ -1045,8 +1045,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f070019
 			public const int button_material_light = 2131165209;
 			
-			// aapt resource value: 0x7f07005a
-			public const int common_google_signin_btn_text_dark = 2131165274;
+			// aapt resource value: 0x7f07005b
+			public const int common_google_signin_btn_text_dark = 2131165275;
 			
 			// aapt resource value: 0x7f070000
 			public const int common_google_signin_btn_text_dark_default = 2131165184;
@@ -1060,8 +1060,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f070003
 			public const int common_google_signin_btn_text_dark_pressed = 2131165187;
 			
-			// aapt resource value: 0x7f07005b
-			public const int common_google_signin_btn_text_light = 2131165275;
+			// aapt resource value: 0x7f07005c
+			public const int common_google_signin_btn_text_light = 2131165276;
 			
 			// aapt resource value: 0x7f070004
 			public const int common_google_signin_btn_text_light_default = 2131165188;
@@ -1075,8 +1075,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f070007
 			public const int common_google_signin_btn_text_light_pressed = 2131165191;
 			
-			// aapt resource value: 0x7f07005c
-			public const int common_google_signin_btn_tint = 2131165276;
+			// aapt resource value: 0x7f07005d
+			public const int common_google_signin_btn_tint = 2131165277;
 			
 			// aapt resource value: 0x7f07001a
 			public const int dim_foreground_disabled_material_dark = 2131165210;
@@ -1174,6 +1174,9 @@ namespace RallyUp
 			// aapt resource value: 0x7f070036
 			public const int primary_text_disabled_material_light = 2131165238;
 			
+			// aapt resource value: 0x7f070046
+			public const int rallyBackgroundOrange = 2131165254;
+			
 			// aapt resource value: 0x7f070037
 			public const int ripple_material_dark = 2131165239;
 			
@@ -1198,11 +1201,11 @@ namespace RallyUp
 			// aapt resource value: 0x7f07003e
 			public const int switch_thumb_disabled_material_light = 2131165246;
 			
-			// aapt resource value: 0x7f07005d
-			public const int switch_thumb_material_dark = 2131165277;
-			
 			// aapt resource value: 0x7f07005e
-			public const int switch_thumb_material_light = 2131165278;
+			public const int switch_thumb_material_dark = 2131165278;
+			
+			// aapt resource value: 0x7f07005f
+			public const int switch_thumb_material_light = 2131165279;
 			
 			// aapt resource value: 0x7f07003f
 			public const int switch_thumb_normal_material_dark = 2131165247;
@@ -1909,52 +1912,49 @@ namespace RallyUp
 			public const int icon = 2130837608;
 			
 			// aapt resource value: 0x7f020069
-			public const int notification_action_background = 2130837609;
+			public const int icon1 = 2130837609;
 			
 			// aapt resource value: 0x7f02006a
-			public const int notification_bg = 2130837610;
+			public const int notification_action_background = 2130837610;
 			
 			// aapt resource value: 0x7f02006b
-			public const int notification_bg_low = 2130837611;
+			public const int notification_bg = 2130837611;
 			
 			// aapt resource value: 0x7f02006c
-			public const int notification_bg_low_normal = 2130837612;
+			public const int notification_bg_low = 2130837612;
 			
 			// aapt resource value: 0x7f02006d
-			public const int notification_bg_low_pressed = 2130837613;
+			public const int notification_bg_low_normal = 2130837613;
 			
 			// aapt resource value: 0x7f02006e
-			public const int notification_bg_normal = 2130837614;
+			public const int notification_bg_low_pressed = 2130837614;
 			
 			// aapt resource value: 0x7f02006f
-			public const int notification_bg_normal_pressed = 2130837615;
+			public const int notification_bg_normal = 2130837615;
 			
 			// aapt resource value: 0x7f020070
-			public const int notification_icon_background = 2130837616;
-			
-			// aapt resource value: 0x7f020077
-			public const int notification_template_icon_bg = 2130837623;
-			
-			// aapt resource value: 0x7f020078
-			public const int notification_template_icon_low_bg = 2130837624;
+			public const int notification_bg_normal_pressed = 2130837616;
 			
 			// aapt resource value: 0x7f020071
-			public const int notification_tile_bg = 2130837617;
-			
-			// aapt resource value: 0x7f020072
-			public const int notify_panel_notification_icon_bg = 2130837618;
-			
-			// aapt resource value: 0x7f020073
-			public const int oneRallyFlag = 2130837619;
-			
-			// aapt resource value: 0x7f020074
-			public const int RallyDefaultFlag = 2130837620;
-			
-			// aapt resource value: 0x7f020075
-			public const int tooltip_frame_dark = 2130837621;
+			public const int notification_icon_background = 2130837617;
 			
 			// aapt resource value: 0x7f020076
-			public const int tooltip_frame_light = 2130837622;
+			public const int notification_template_icon_bg = 2130837622;
+			
+			// aapt resource value: 0x7f020077
+			public const int notification_template_icon_low_bg = 2130837623;
+			
+			// aapt resource value: 0x7f020072
+			public const int notification_tile_bg = 2130837618;
+			
+			// aapt resource value: 0x7f020073
+			public const int notify_panel_notification_icon_bg = 2130837619;
+			
+			// aapt resource value: 0x7f020074
+			public const int tooltip_frame_dark = 2130837620;
+			
+			// aapt resource value: 0x7f020075
+			public const int tooltip_frame_light = 2130837621;
 			
 			static Drawable()
 			{
@@ -2062,6 +2062,9 @@ namespace RallyUp
 			// aapt resource value: 0x7f090072
 			public const int addFriendUsernameButton = 2131296370;
 			
+			// aapt resource value: 0x7f09009d
+			public const int addRallyFriendsList = 2131296413;
+			
 			// aapt resource value: 0x7f090010
 			public const int adjust_height = 2131296272;
 			
@@ -2127,9 +2130,6 @@ namespace RallyUp
 			
 			// aapt resource value: 0x7f09001c
 			public const int disableHome = 2131296284;
-			
-			// aapt resource value: 0x7f0900a8
-			public const int doneButton = 2131296424;
 			
 			// aapt resource value: 0x7f090062
 			public const int edit_query = 2131296354;
@@ -2221,14 +2221,14 @@ namespace RallyUp
 			// aapt resource value: 0x7f090079
 			public const int loginErrorBox = 2131296377;
 			
-			// aapt resource value: 0x7f0900a9
-			public const int logoutButton = 2131296425;
+			// aapt resource value: 0x7f0900a4
+			public const int logoutButton = 2131296420;
 			
 			// aapt resource value: 0x7f09008b
 			public const int media_actions = 2131296395;
 			
-			// aapt resource value: 0x7f0900aa
-			public const int message = 2131296426;
+			// aapt resource value: 0x7f0900a5
+			public const int message = 2131296421;
 			
 			// aapt resource value: 0x7f09002c
 			public const int middle = 2131296300;
@@ -2245,14 +2245,14 @@ namespace RallyUp
 			// aapt resource value: 0x7f090077
 			public const int newFriendButton = 2131296375;
 			
-			// aapt resource value: 0x7f0900a5
-			public const int newPassBox = 2131296421;
+			// aapt resource value: 0x7f0900a2
+			public const int newPassBox = 2131296418;
 			
-			// aapt resource value: 0x7f0900a6
-			public const int newRegisterButton = 2131296422;
+			// aapt resource value: 0x7f0900a3
+			public const int newRegisterButton = 2131296419;
 			
-			// aapt resource value: 0x7f0900a4
-			public const int newUserBox = 2131296420;
+			// aapt resource value: 0x7f0900a1
+			public const int newUserBox = 2131296417;
 			
 			// aapt resource value: 0x7f090012
 			public const int none = 2131296274;
@@ -2278,8 +2278,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f090074
 			public const int personalEventButton = 2131296372;
 			
-			// aapt resource value: 0x7f09009f
-			public const int pingButton = 2131296415;
+			// aapt resource value: 0x7f09009a
+			public const int pingButton = 2131296410;
 			
 			// aapt resource value: 0x7f090080
 			public const int profileButton = 2131296384;
@@ -2293,32 +2293,23 @@ namespace RallyUp
 			// aapt resource value: 0x7f090059
 			public const int radio = 2131296345;
 			
-			// aapt resource value: 0x7f0900a0
-			public const int rallyBackButton = 2131296416;
-			
 			// aapt resource value: 0x7f09007e
 			public const int rallyButton = 2131296382;
 			
-			// aapt resource value: 0x7f09009d
-			public const int rallyErrorBox = 2131296413;
-			
-			// aapt resource value: 0x7f0900a1
-			public const int rallyFlagCarousel = 2131296417;
-			
 			// aapt resource value: 0x7f09009b
-			public const int rallyFlagImage = 2131296411;
-			
-			// aapt resource value: 0x7f09009a
-			public const int rallyTaglineBox = 2131296410;
+			public const int rallyMenuButton = 2131296411;
 			
 			// aapt resource value: 0x7f09009c
-			public const int rallyWhatFriendsButton = 2131296412;
+			public const int rallyTaglineBox = 2131296412;
+			
+			// aapt resource value: 0x7f09009e
+			public const int rallyUpButton = 2131296414;
 			
 			// aapt resource value: 0x7f09007d
 			public const int registerButton = 2131296381;
 			
-			// aapt resource value: 0x7f0900a2
-			public const int registrationErrorBox = 2131296418;
+			// aapt resource value: 0x7f09009f
+			public const int registrationErrorBox = 2131296415;
 			
 			// aapt resource value: 0x7f090093
 			public const int right_icon = 2131296403;
@@ -2332,8 +2323,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f090024
 			public const int screen = 2131296292;
 			
-			// aapt resource value: 0x7f0900a3
-			public const int screenNameBox = 2131296419;
+			// aapt resource value: 0x7f0900a0
+			public const int screenNameBox = 2131296416;
 			
 			// aapt resource value: 0x7f09004f
 			public const int scrollIndicatorDown = 2131296335;
@@ -2374,14 +2365,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f09006d
 			public const int search_voice_btn = 2131296365;
 			
-			// aapt resource value: 0x7f0900a7
-			public const int selectFriendsView = 2131296423;
-			
 			// aapt resource value: 0x7f09006e
 			public const int select_dialog_listview = 2131296366;
-			
-			// aapt resource value: 0x7f09009e
-			public const int sendRallyButton = 2131296414;
 			
 			// aapt resource value: 0x7f090083
 			public const int settingsButton = 2131296387;
@@ -2668,7 +2653,7 @@ namespace RallyUp
 			public const int oneFriend = 2130903086;
 			
 			// aapt resource value: 0x7f03002f
-			public const int oneRally = 2130903087;
+			public const int oneRallyFriend = 2130903087;
 			
 			// aapt resource value: 0x7f030030
 			public const int PingPage = 2130903088;
@@ -2689,16 +2674,13 @@ namespace RallyUp
 			public const int select_dialog_singlechoice_material = 2130903093;
 			
 			// aapt resource value: 0x7f030036
-			public const int SelectFriendsPage = 2130903094;
+			public const int SettingsPage = 2130903094;
 			
 			// aapt resource value: 0x7f030037
-			public const int SettingsPage = 2130903095;
+			public const int support_simple_spinner_dropdown_item = 2130903095;
 			
 			// aapt resource value: 0x7f030038
-			public const int support_simple_spinner_dropdown_item = 2130903096;
-			
-			// aapt resource value: 0x7f030039
-			public const int tooltip = 2130903097;
+			public const int tooltip = 2130903096;
 			
 			static Layout()
 			{
@@ -3715,6 +3697,9 @@ namespace RallyUp
 			
 			// aapt resource value: 0x7f0a0106
 			public const int Theme_AppCompat_NoActionBar = 2131362054;
+			
+			// aapt resource value: 0x7f0a0162
+			public const int Theme_Custom = 2131362146;
 			
 			// aapt resource value: 0x7f0a0107
 			public const int ThemeOverlay_AppCompat = 2131362055;
