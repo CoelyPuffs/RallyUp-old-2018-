@@ -11,6 +11,7 @@ using System.Web.Script.Serialization;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
+using System.Runtime.Serialization.Formatters.Binary;
 
 using RallyUpLibrary;
 
@@ -42,12 +43,12 @@ namespace RallyUpServer
                 }
 
                 // Registration
-                else if (clientData.Split(':')[0] == "Register")
+                else if (clientData.Split('≡')[0] == "Register")
                 {
-                    string potentialUsername = clientData.Split(':')[1];
+                    string potentialUsername = clientData.Split('≡')[1];
                     if (checkUsernameUnique(potentialUsername))
                     {
-                        registerUser(potentialUsername, clientData.Split(':')[2], clientData.Split(':')[3]);
+                        registerUser(potentialUsername, clientData.Split('≡')[2], clientData.Split('≡')[3]);
                         clientSocket.WriteString("RegistrationSuccessful");
                         Console.WriteLine("RegistrationSuccessful");
                     }
@@ -59,10 +60,10 @@ namespace RallyUpServer
                 }
 
                 // Login
-                else if (clientData.Split(':')[0] == "Login")
+                else if (clientData.Split('≡')[0] == "Login")
                 {
-                    string username = clientData.Split(':')[1];
-                    string password = clientData.Split(':')[2];
+                    string username = clientData.Split('≡')[1];
+                    string password = clientData.Split('≡')[2];
 
                     string query = "SELECT pwSalt, pwHash FROM RallyUpUser WHERE RallyUpUser.username = @username";
                     SqlCommand cmd = new SqlCommand(query, sqlConnection1);
@@ -77,7 +78,7 @@ namespace RallyUpServer
                             var salt = reader.GetValue(0);
                             var realHash = reader.GetValue(1);
 
-                            if (((byte[])realHash).SequenceEqual(GenerateHash(Encoding.ASCII.GetBytes(password), (byte[])salt, 500, 50)))
+                            if (((byte[])realHash).SequenceEqual(GenerateHash(Encoding.UTF32.GetBytes(password), (byte[])salt, 500, 50)))
                             {
                                 clientSocket.WriteString("ValidCredentials");
                                 Console.WriteLine("ValidCredentials");
@@ -98,9 +99,9 @@ namespace RallyUpServer
                 }
 
                 // Return list of friends
-                else if(clientData.Split(':')[0] == "GetFriends")
+                else if(clientData.Split('≡')[0] == "GetFriends")
                 {
-                    string username = clientData.Split(':')[1];
+                    string username = clientData.Split('≡')[1];
                     List<List<string>> friendList = new List<List<string>>();
                     string query = "SELECT friendName FROM RallyUpFriend WHERE RallyUpFriend.username = @username";
                     string friendInfoQuery = "SELECT screenName FROM RallyUpUser WHERE RallyUpUser.username = @friendName";
@@ -134,7 +135,7 @@ namespace RallyUpServer
                         string friendListString = "";
                         foreach (List<string> friend in friendList)
                         {
-                            friendListString += friend[0] + ':' + friend[1] + '/';
+                            friendListString += friend[0] + '≡' + friend[1] + '‗';
                         }
                         clientSocket.WriteString(friendListString);
                         Console.WriteLine(friendListString);
@@ -145,45 +146,56 @@ namespace RallyUpServer
                         Console.WriteLine("FriendsNotFound");
                     }
                 }
-                else if(clientData.Split(':')[0] == "AddFriend")
+                else if(clientData.Split('≡')[0] == "AddFriend")
                 {
-                    string username = clientData.Split(':')[1];
-                    string friendName = clientData.Split(':')[2];
-                    string checkExistsQuery = "SELECT username FROM RallyUpUser WHERE username = @friendName";
-                    string insertQuery = "INSERT INTO RallyUpFriend VALUES (@username, @friendName)";
-                    SqlCommand cmd = new SqlCommand(checkExistsQuery, sqlConnection1);
-                    cmd.Parameters.AddWithValue("@username", username);
-                    sqlConnection1.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (reader.HasRows)
+                    try
                     {
-                        cmd = new SqlCommand(insertQuery, sqlConnection1);
-                        cmd.Parameters.AddWithValue("@username", username);
+                        string username = clientData.Split('≡')[1];
+                        string friendName = clientData.Split('≡')[2];
+                        string checkExistsQuery = "SELECT username FROM RallyUpUser WHERE username = @friendName";
+                        string insertQuery = "INSERT INTO RallyUpFriend VALUES (@username, @friendName)";
+                        SqlCommand cmd = new SqlCommand(checkExistsQuery, sqlConnection1);
                         cmd.Parameters.AddWithValue("@friendName", friendName);
-                        int readResult;
-                        readResult = cmd.ExecuteNonQuery();
-                        if (readResult == 1)
+                        sqlConnection1.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        bool friendExists = reader.HasRows;
+                        sqlConnection1.Close();
+                        if (friendExists)
                         {
-                            clientSocket.WriteString("FriendAdded");
+                            cmd = new SqlCommand(insertQuery, sqlConnection1);
+                            cmd.Parameters.AddWithValue("@username", username);
+                            cmd.Parameters.AddWithValue("@friendName", friendName);
+                            int readResult;
+                            sqlConnection1.Open();
+                            readResult = cmd.ExecuteNonQuery();
+                            if (readResult == 1)
+                            {
+                                clientSocket.WriteString("FriendAdded");
+                            }
+                            else
+                            {
+                                clientSocket.WriteString("ErrorAddingFriend");
+                            }
+                            sqlConnection1.Close();
                         }
                         else
                         {
-                            clientSocket.WriteString("ErrorAddingFriend");
+                            clientSocket.WriteString("FriendNotExist");
                         }
                     }
-                    else
+                    catch
                     {
-                        clientSocket.WriteString("FriendNotExist");
+                        clientSocket.WriteString("ErrorAddingFriend");
                     }
                 }
-                else if(clientData.Split(':')[0] == "Rally")
+                else if(clientData.Split('≡')[0] == "Rally")
                 {
-                    string senderName = clientData.Split(':')[1];
-                    string tagline = clientData.Split(':')[2];
+                    string senderName = clientData.Split('≡')[1];
+                    string tagline = clientData.Split('≡')[2];
                     List<string> recipients = new List<string>();
-                    for (int i = 3; i < clientData.Split(':').Length; i++)
+                    for (int i = 3; i < clientData.Split('≡').Length; i++)
                     {
-                        SendRallyNotification(clientData.Split(':')[i], tagline, senderName);
+                        SendRallyNotification(clientData.Split('≡')[i], tagline, senderName);
                     }
                 }
             }
@@ -269,7 +281,7 @@ namespace RallyUpServer
         {
             string query = "INSERT INTO RallyUpUser(username, pwSalt, pwHash, screenName) VALUES (@username, @pwSalt, @pwHash, @screenName)";
             byte[] pwSalt = GenerateSalt();
-            byte[] pwHash = GenerateHash(Encoding.ASCII.GetBytes(password), pwSalt, 500, 50);
+            byte[] pwHash = GenerateHash(Encoding.UTF32.GetBytes(password), pwSalt, 500, 50);
             SqlCommand cmd = new SqlCommand(query, sqlConnection1);
             cmd.Parameters.AddWithValue("@username", username);
             cmd.Parameters.AddWithValue("@pwSalt", pwSalt);

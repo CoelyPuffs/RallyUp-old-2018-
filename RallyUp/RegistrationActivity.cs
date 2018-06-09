@@ -39,7 +39,7 @@ namespace RallyUp
                 try
                 {
                     socket = new TcpClient("192.168.1.2", 3292);
-                    socket.WriteString("Register:" + newUserBox.Text + ':' + newPassBox.Text + ':' + screenNameBox.Text);
+                    socket.WriteString("Register≡" + newUserBox.Text + '≡' + newPassBox.Text + '≡' + screenNameBox.Text);
                     errorBox.Text = "";
                     if (socket.ReadString() == "RegistrationSuccessful")
                     {

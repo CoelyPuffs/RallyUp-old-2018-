@@ -61,9 +61,9 @@ namespace RallyUp
             {
                 socket = new TcpClient("192.168.1.2", 3292);
                 socket.ReceiveTimeout = 1000;
-                socket.WriteString("GetFriends:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
+                socket.WriteString("GetFriends≡" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
                 string friendListString = socket.ReadString();
-                string[] firstList = friendListString.Split('/');
+                string[] firstList = friendListString.Split('‗');
                 List<Friend> friendDataList = new List<Friend>();
                 if (firstList.Length > 0)
                 { 
@@ -77,7 +77,7 @@ namespace RallyUp
 
                     foreach (string friend in firstList)
                     {
-                        friendDataList.Add(new Friend(friend.Split(':')[1], friend.Split(':')[0]));
+                        friendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
                     }
                 }
                 friendList = friendDataList;
@@ -89,7 +89,7 @@ namespace RallyUp
                     List<Friend> localFriendDataList = new List<Friend>();
                     foreach (string friend in PreferenceManager.GetDefaultSharedPreferences(this).GetStringSet("FriendList", new List<string>()))
                     {
-                        localFriendDataList.Add(new Friend(friend.Split(':')[1], friend.Split(':')[0]));
+                        localFriendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
                     }
                     return localFriendDataList;
                 }
@@ -116,7 +116,7 @@ namespace RallyUp
     public class Friend
     {
         public string screenName;
-        private string username;
+        public string username;
 
         public Friend(string screenName, string username)
         {

@@ -32,11 +32,6 @@ namespace RallyUp
                 StartActivity(typeof(FriendsActivity));
             };
 
-            calendarButton.Click += delegate
-            {
-                StartActivity(typeof(CalendarActivity));
-            };
-
             rallyButton.Click += delegate
             {
                 StartActivity(typeof(RallyActivity));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 
 using Android.App;
 using Android.Content;
@@ -57,8 +58,9 @@ namespace RallyUp
                         socket = new TcpClient("192.168.1.2", 3292);
                         socket.ReceiveTimeout = 1000;
                         errorBox.Text = "";
-                        socket.WriteString("Login:" + userBox.Text + ':' + passBox.Text);
-                        string returnString = socket.ReadString();
+                        socket.WriteString("Login≡" + userBox.Text + '≡' + passBox.Text);
+
+                        errorBox.Text = returnString;
                         if (returnString == "ValidCredentials")
                         {
                             ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
@@ -82,7 +84,7 @@ namespace RallyUp
                     }
                     catch
                     {
-                        errorBox.Text = "Server connection failed. Make sure you're online.";
+                        //errorBox.Text = "Server connection failed. Make sure you're online.";
                     }
                 }
             };

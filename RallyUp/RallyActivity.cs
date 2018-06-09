@@ -49,11 +49,12 @@ namespace RallyUp
 
             rallyUpButton.Click += delegate
             {
-                foreach (SelectFriendViewHolder friend in adapter.friendBoxes)
+                string tagline = "Rally Up!";
+                for(int i = 0; i < adapter.ItemCount; i++)
                 {
-                    if (friend.isSelected)
+                    if (adapter.friendBoxes[i].isSelected)
                     {
-                        selectedFriends += (friend.nameBox.Text + ':');
+                        selectedFriends += (adapter.friends[i].screenName + "‗" + adapter.friends[i].username + '≡');
                     }
                 }
                 if (selectedFriends != "")
@@ -62,24 +63,23 @@ namespace RallyUp
                     {
                         TcpClient socket = new TcpClient("192.168.1.2", 3292);
                         socket.ReceiveTimeout = 1000;
-                        string tagline;
                         if (rallyTaglineBox.Text != "")
                         {
                             tagline = rallyTaglineBox.Text;
                         }
-                        else
-                        {
-                            tagline = "Rally Up!";
-                        }
                         //Change this to send the screen name
-                        socket.WriteString("Rally:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + ':' + tagline + ':' + selectedFriends);
-                        selectedFriends = "";
+                        socket.WriteString("Rally≡" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + '≡' + tagline + '≡' + selectedFriends);
+                        Intent myIntent = new Intent(this, typeof(RunningRallyActivity));
+                        myIntent.PutExtra("RallyInfo", tagline + '≡' + selectedFriends);
+                        StartActivity(myIntent);
+                        Finish();
                     }
                     catch
                     {
 
                     }
                 }
+
             };
         }
 
@@ -90,9 +90,9 @@ namespace RallyUp
             {
                 socket = new TcpClient("192.168.1.2", 3292);
                 socket.ReceiveTimeout = 1000;
-                socket.WriteString("GetFriends:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
+                socket.WriteString("GetFriends≡" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
                 string friendListString = socket.ReadString();
-                string[] firstList = friendListString.Split('/');
+                string[] firstList = friendListString.Split('‗');
                 List<Friend> friendDataList = new List<Friend>();
                 if (firstList.Length > 0)
                 {
@@ -106,7 +106,7 @@ namespace RallyUp
 
                     foreach (string friend in firstList)
                     {
-                        friendDataList.Add(new Friend(friend.Split(':')[1], friend.Split(':')[0]));
+                        friendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
                     }
                 }
                 friendList = friendDataList;
@@ -118,7 +118,7 @@ namespace RallyUp
                     List<Friend> localFriendDataList = new List<Friend>();
                     foreach (string friend in PreferenceManager.GetDefaultSharedPreferences(this).GetStringSet("FriendList", new List<string>()))
                     {
-                        localFriendDataList.Add(new Friend(friend.Split(':')[1], friend.Split(':')[0]));
+                        localFriendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
                     }
                     return localFriendDataList;
                 }
@@ -132,7 +132,7 @@ namespace RallyUp
     }
     public class SelectFriendAdapter : RecyclerView.Adapter
     {
-        IList<Friend> friends = new List<Friend>();
+        public IList<Friend> friends = new List<Friend>();
         public List<SelectFriendViewHolder> friendBoxes = new List<SelectFriendViewHolder>();
 
         public SelectFriendAdapter(IList<Friend> friends)
