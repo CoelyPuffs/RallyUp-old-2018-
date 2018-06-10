@@ -20,7 +20,7 @@ using RallyUpLibrary;
 
 namespace RallyUp
 {
-    [Activity(Label = "RallyUp", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "RallyUp", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
         private TcpClient socket;

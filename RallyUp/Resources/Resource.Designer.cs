@@ -931,44 +931,44 @@ namespace RallyUp
 		public partial class Color
 		{
 			
+			// aapt resource value: 0x7f070046
+			public const int abc_background_cache_hint_selector_material_dark = 2131165254;
+			
 			// aapt resource value: 0x7f070047
-			public const int abc_background_cache_hint_selector_material_dark = 2131165255;
+			public const int abc_background_cache_hint_selector_material_light = 2131165255;
 			
 			// aapt resource value: 0x7f070048
-			public const int abc_background_cache_hint_selector_material_light = 2131165256;
+			public const int abc_btn_colored_borderless_text_material = 2131165256;
 			
 			// aapt resource value: 0x7f070049
-			public const int abc_btn_colored_borderless_text_material = 2131165257;
+			public const int abc_btn_colored_text_material = 2131165257;
 			
 			// aapt resource value: 0x7f07004a
-			public const int abc_btn_colored_text_material = 2131165258;
+			public const int abc_color_highlight_material = 2131165258;
 			
 			// aapt resource value: 0x7f07004b
-			public const int abc_color_highlight_material = 2131165259;
+			public const int abc_hint_foreground_material_dark = 2131165259;
 			
 			// aapt resource value: 0x7f07004c
-			public const int abc_hint_foreground_material_dark = 2131165260;
-			
-			// aapt resource value: 0x7f07004d
-			public const int abc_hint_foreground_material_light = 2131165261;
+			public const int abc_hint_foreground_material_light = 2131165260;
 			
 			// aapt resource value: 0x7f070008
 			public const int abc_input_method_navigation_guard = 2131165192;
 			
+			// aapt resource value: 0x7f07004d
+			public const int abc_primary_text_disable_only_material_dark = 2131165261;
+			
 			// aapt resource value: 0x7f07004e
-			public const int abc_primary_text_disable_only_material_dark = 2131165262;
+			public const int abc_primary_text_disable_only_material_light = 2131165262;
 			
 			// aapt resource value: 0x7f07004f
-			public const int abc_primary_text_disable_only_material_light = 2131165263;
+			public const int abc_primary_text_material_dark = 2131165263;
 			
 			// aapt resource value: 0x7f070050
-			public const int abc_primary_text_material_dark = 2131165264;
+			public const int abc_primary_text_material_light = 2131165264;
 			
 			// aapt resource value: 0x7f070051
-			public const int abc_primary_text_material_light = 2131165265;
-			
-			// aapt resource value: 0x7f070052
-			public const int abc_search_url_text = 2131165266;
+			public const int abc_search_url_text = 2131165265;
 			
 			// aapt resource value: 0x7f070009
 			public const int abc_search_url_text_normal = 2131165193;
@@ -979,29 +979,29 @@ namespace RallyUp
 			// aapt resource value: 0x7f07000b
 			public const int abc_search_url_text_selected = 2131165195;
 			
+			// aapt resource value: 0x7f070052
+			public const int abc_secondary_text_material_dark = 2131165266;
+			
 			// aapt resource value: 0x7f070053
-			public const int abc_secondary_text_material_dark = 2131165267;
+			public const int abc_secondary_text_material_light = 2131165267;
 			
 			// aapt resource value: 0x7f070054
-			public const int abc_secondary_text_material_light = 2131165268;
+			public const int abc_tint_btn_checkable = 2131165268;
 			
 			// aapt resource value: 0x7f070055
-			public const int abc_tint_btn_checkable = 2131165269;
+			public const int abc_tint_default = 2131165269;
 			
 			// aapt resource value: 0x7f070056
-			public const int abc_tint_default = 2131165270;
+			public const int abc_tint_edittext = 2131165270;
 			
 			// aapt resource value: 0x7f070057
-			public const int abc_tint_edittext = 2131165271;
+			public const int abc_tint_seek_thumb = 2131165271;
 			
 			// aapt resource value: 0x7f070058
-			public const int abc_tint_seek_thumb = 2131165272;
+			public const int abc_tint_spinner = 2131165272;
 			
 			// aapt resource value: 0x7f070059
-			public const int abc_tint_spinner = 2131165273;
-			
-			// aapt resource value: 0x7f07005a
-			public const int abc_tint_switch_track = 2131165274;
+			public const int abc_tint_switch_track = 2131165273;
 			
 			// aapt resource value: 0x7f07000c
 			public const int accent_material_dark = 2131165196;
@@ -1045,8 +1045,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f070019
 			public const int button_material_light = 2131165209;
 			
-			// aapt resource value: 0x7f07005b
-			public const int common_google_signin_btn_text_dark = 2131165275;
+			// aapt resource value: 0x7f07005a
+			public const int common_google_signin_btn_text_dark = 2131165274;
 			
 			// aapt resource value: 0x7f070000
 			public const int common_google_signin_btn_text_dark_default = 2131165184;
@@ -1060,8 +1060,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f070003
 			public const int common_google_signin_btn_text_dark_pressed = 2131165187;
 			
-			// aapt resource value: 0x7f07005c
-			public const int common_google_signin_btn_text_light = 2131165276;
+			// aapt resource value: 0x7f07005b
+			public const int common_google_signin_btn_text_light = 2131165275;
 			
 			// aapt resource value: 0x7f070004
 			public const int common_google_signin_btn_text_light_default = 2131165188;
@@ -1075,8 +1075,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f070007
 			public const int common_google_signin_btn_text_light_pressed = 2131165191;
 			
-			// aapt resource value: 0x7f07005d
-			public const int common_google_signin_btn_tint = 2131165277;
+			// aapt resource value: 0x7f07005c
+			public const int common_google_signin_btn_tint = 2131165276;
 			
 			// aapt resource value: 0x7f07001a
 			public const int dim_foreground_disabled_material_dark = 2131165210;
@@ -1174,9 +1174,6 @@ namespace RallyUp
 			// aapt resource value: 0x7f070036
 			public const int primary_text_disabled_material_light = 2131165238;
 			
-			// aapt resource value: 0x7f070046
-			public const int rallyBackgroundOrange = 2131165254;
-			
 			// aapt resource value: 0x7f070037
 			public const int ripple_material_dark = 2131165239;
 			
@@ -1201,11 +1198,11 @@ namespace RallyUp
 			// aapt resource value: 0x7f07003e
 			public const int switch_thumb_disabled_material_light = 2131165246;
 			
-			// aapt resource value: 0x7f07005e
-			public const int switch_thumb_material_dark = 2131165278;
+			// aapt resource value: 0x7f07005d
+			public const int switch_thumb_material_dark = 2131165277;
 			
-			// aapt resource value: 0x7f07005f
-			public const int switch_thumb_material_light = 2131165279;
+			// aapt resource value: 0x7f07005e
+			public const int switch_thumb_material_light = 2131165278;
 			
 			// aapt resource value: 0x7f07003f
 			public const int switch_thumb_normal_material_dark = 2131165247;
@@ -1938,11 +1935,11 @@ namespace RallyUp
 			// aapt resource value: 0x7f020071
 			public const int notification_icon_background = 2130837617;
 			
-			// aapt resource value: 0x7f020076
-			public const int notification_template_icon_bg = 2130837622;
-			
 			// aapt resource value: 0x7f020077
-			public const int notification_template_icon_low_bg = 2130837623;
+			public const int notification_template_icon_bg = 2130837623;
+			
+			// aapt resource value: 0x7f020078
+			public const int notification_template_icon_low_bg = 2130837624;
 			
 			// aapt resource value: 0x7f020072
 			public const int notification_tile_bg = 2130837618;
@@ -1951,10 +1948,13 @@ namespace RallyUp
 			public const int notify_panel_notification_icon_bg = 2130837619;
 			
 			// aapt resource value: 0x7f020074
-			public const int tooltip_frame_dark = 2130837620;
+			public const int splash_centered = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int tooltip_frame_light = 2130837621;
+			public const int tooltip_frame_dark = 2130837621;
+			
+			// aapt resource value: 0x7f020076
+			public const int tooltip_frame_light = 2130837622;
 			
 			static Drawable()
 			{
@@ -3705,7 +3705,7 @@ namespace RallyUp
 			public const int Theme_AppCompat_NoActionBar = 2131362054;
 			
 			// aapt resource value: 0x7f0a0162
-			public const int Theme_Custom = 2131362146;
+			public const int Theme_Splash = 2131362146;
 			
 			// aapt resource value: 0x7f0a0107
 			public const int ThemeOverlay_AppCompat = 2131362055;

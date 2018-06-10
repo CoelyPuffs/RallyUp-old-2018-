@@ -221,13 +221,20 @@ namespace RallyUpServer
                 else if(clientData.Split(':')[0] == "Rally")
                 {
                     // Add parsing stuff
-                    string senderName = clientData.Split('≡')[1];
+                    string[] prefix = { clientData.Split(':')[0], clientData.Split(':')[1] };
+                    string[] lengthsArray = prefix[1].Split(',');
+                    string infoString = clientData.Substring(prefix.Length + 1);
+                    string senderName = infoString.Substring(0, Convert.ToInt32(lengthsArray[0]));
+                    string tagline = infoString.Substring(Convert.ToInt32(lengthsArray[0], Convert.ToInt32(lengthsArray[1])));
+
+
+                    /*string senderName = clientData.Split(':')[1];
                     string tagline = clientData.Split('≡')[2];
                     List<string> recipients = new List<string>();
                     for (int i = 3; i < clientData.Split('≡').Length; i++)
                     {
                         SendRallyNotification(clientData.Split('≡')[i], tagline, senderName);
-                    }
+                    }*/
                 }
             }
             catch (Exception ex)
