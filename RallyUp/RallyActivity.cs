@@ -23,7 +23,7 @@ namespace RallyUp
     public class RallyActivity : Activity
     {
         private TcpClient socket;
-        string selectedFriends = "";
+        List<List<string>> selectedFriends = new List<List<string>>();
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -54,10 +54,15 @@ namespace RallyUp
                 {
                     if (adapter.friendBoxes[i].isSelected)
                     {
-                        selectedFriends += (adapter.friends[i].screenName + "‗" + adapter.friends[i].username + '≡');
+                        List<string> thisFriend = new List<string>();
+                        thisFriend.Add(adapter.friends[i].screenName);
+                        thisFriend.Add(adapter.friends[i].screenName.Length.ToString());
+                        thisFriend.Add(adapter.friends[i].username);
+                        thisFriend.Add(adapter.friends[i].username.Length.ToString());
+                        selectedFriends.Add(thisFriend);
                     }
                 }
-                if (selectedFriends != "")
+                if (selectedFriends.Count > 0)
                 {
                     try
                     {
@@ -67,8 +72,21 @@ namespace RallyUp
                         {
                             tagline = rallyTaglineBox.Text;
                         }
-                        //Change this to send the screen name
-                        socket.WriteString("Rally≡" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + '≡' + tagline + '≡' + selectedFriends);
+                        
+                        string friendNamesString = "";
+                        foreach (List<string> friend in selectedFriends)
+                        {
+                            friendNamesString += friend[0] + friend[2];
+                        }
+
+                        string friendLengthsString = "";
+                        foreach (List<string> friend in selectedFriends)
+                        {
+                            friendLengthsString += friend[1] + ',' + friend[3] + ',';
+                        }
+                        friendLengthsString = friendLengthsString.TrimEnd(',');
+
+                        socket.WriteString("Rally:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "").Length + ',' + tagline.Length + ',' + friendLengthsString + ':' + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + tagline + friendNamesString);
                         Intent myIntent = new Intent(this, typeof(RunningRallyActivity));
                         myIntent.PutExtra("RallyInfo", tagline + '≡' + selectedFriends);
                         StartActivity(myIntent);
@@ -90,44 +108,56 @@ namespace RallyUp
             {
                 socket = new TcpClient("192.168.1.2", 3292);
                 socket.ReceiveTimeout = 1000;
-                socket.WriteString("GetFriends≡" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
+                socket.WriteString("GetFriends:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
                 string friendListString = socket.ReadString();
-                string[] firstList = friendListString.Split('‗');
-                List<Friend> friendDataList = new List<Friend>();
-                if (firstList.Length > 0)
+                string[] nameLengths = friendListString.Split(':')[0].Split(',');
+                string nameListString = friendListString.Substring(friendListString.Split(':')[0].Length + 1);
+                List<Friend> firstList = new List<Friend>();
+                int firstPoint = 0;
+                int secondPoint;
+                int thirdPoint;
+                for (int i = 0; i < nameLengths.Length; i += 2)
                 {
-                    firstList = firstList.Take(firstList.Count() - 1).ToArray();
-
+                    secondPoint = firstPoint + Convert.ToInt32(nameLengths[i]);
+                    thirdPoint = secondPoint + Convert.ToInt32(nameLengths[i + 1]);
+                    firstList.Add(new Friend(nameListString.Substring(secondPoint, Convert.ToInt32(nameLengths[i + 1])), nameListString.Substring(firstPoint, Convert.ToInt32(nameLengths[i]))));
+                    firstPoint = thirdPoint;
+                }
+                if (firstList.Count > 0)
+                {
                     ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
                     ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
                     prefsEditor.Remove("FriendList");
-                    prefsEditor.PutStringSet("FriendList", firstList);
+                    prefsEditor.PutString("FriendList", friendListString);
                     prefsEditor.Commit();
-
-                    foreach (string friend in firstList)
-                    {
-                        friendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
-                    }
                 }
-                friendList = friendDataList;
+                friendList = firstList;
+                return friendList;
             }
             catch
             {
                 if (PreferenceManager.GetDefaultSharedPreferences(this).Contains("FriendList"))
                 {
                     List<Friend> localFriendDataList = new List<Friend>();
-                    foreach (string friend in PreferenceManager.GetDefaultSharedPreferences(this).GetStringSet("FriendList", new List<string>()))
+                    string friendListString = PreferenceManager.GetDefaultSharedPreferences(this).GetString("FriendList", "");
+                    string[] nameLengths = friendListString.Split(':')[0].Split(',');
+                    string nameListString = friendListString.Substring(friendListString.Split(':')[0].Length + 1);
+                    List<Friend> firstList = new List<Friend>();
+                    int firstPoint = 0;
+                    int secondPoint;
+                    int thirdPoint;
+                    for (int i = 0; i < nameLengths.Length; i += 2)
                     {
-                        localFriendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
+                        secondPoint = firstPoint + Convert.ToInt32(nameLengths[i]);
+                        thirdPoint = secondPoint + Convert.ToInt32(nameLengths[i + 1]);
+                        firstList.Add(new Friend(nameListString.Substring(secondPoint, Convert.ToInt32(nameLengths[i + 1])), nameListString.Substring(firstPoint, Convert.ToInt32(nameLengths[i]))));
+                        firstPoint = thirdPoint;
                     }
+                    localFriendDataList = firstList;
                     return localFriendDataList;
                 }
-                else
-                {
-                    return new List<Friend>();
-                }
             }
-            return friendList;
+            return new List<Friend>();
         }
     }
     public class SelectFriendAdapter : RecyclerView.Adapter

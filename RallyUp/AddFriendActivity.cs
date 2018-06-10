@@ -44,7 +44,7 @@ namespace RallyUp
                 {
                     socket = new TcpClient("192.168.1.2", 3292);
                     socket.ReceiveTimeout = 1000;
-                    socket.WriteString("AddFriend≡" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + '≡' + friendNameBox.Text);
+                    socket.WriteString("AddFriend:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "").Length + ',' + friendNameBox.Text.Length + ':' + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + friendNameBox.Text);
                     string replyString = socket.ReadString();
                     if (replyString == "FriendAdded")
                     {

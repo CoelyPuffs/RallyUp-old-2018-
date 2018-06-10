@@ -43,12 +43,21 @@ namespace RallyUpServer
                 }
 
                 // Registration
-                else if (clientData.Split('≡')[0] == "Register")
+                else if (clientData.Split(':')[0] == "Register")
                 {
-                    string potentialUsername = clientData.Split('≡')[1];
+                    string[] prefix = { clientData.Split(':')[0], clientData.Split(':')[1] };
+                    int usernameLength = Convert.ToInt32(prefix[1].Split(',')[0]);
+                    int passwordLength = Convert.ToInt32(prefix[1].Split(',')[1]);
+                    int screenNameLength = Convert.ToInt32(prefix[1].Split(',')[2]);
+                    int prefixLength = 10 + prefix[1].Length;
+                    string suffix = clientData.Substring(prefixLength);
+                    string potentialUsername = suffix.Substring(0, usernameLength);
+                    string password = suffix.Substring(usernameLength, passwordLength);
+                    string screenName = suffix.Substring(usernameLength + passwordLength, screenNameLength);
+
                     if (checkUsernameUnique(potentialUsername))
                     {
-                        registerUser(potentialUsername, clientData.Split('≡')[2], clientData.Split('≡')[3]);
+                        registerUser(potentialUsername, password, screenName);
                         clientSocket.WriteString("RegistrationSuccessful");
                         Console.WriteLine("RegistrationSuccessful");
                     }
@@ -60,10 +69,15 @@ namespace RallyUpServer
                 }
 
                 // Login
-                else if (clientData.Split('≡')[0] == "Login")
+                else if (clientData.Split(':')[0] == "Login")
                 {
-                    string username = clientData.Split('≡')[1];
-                    string password = clientData.Split('≡')[2];
+                    string[] prefix = { clientData.Split(':')[0], clientData.Split(':')[1] };
+                    int usernameLength = Convert.ToInt32(prefix[1].Split(',')[0]);
+                    int passwordLength = Convert.ToInt32(prefix[1].Split(',')[1]);
+                    int prefixLength = 7 + prefix[1].Length;
+                    string suffix = clientData.Substring(prefixLength);
+                    string username = suffix.Substring(0, usernameLength);
+                    string password = suffix.Substring(usernameLength, passwordLength);
 
                     string query = "SELECT pwSalt, pwHash FROM RallyUpUser WHERE RallyUpUser.username = @username";
                     SqlCommand cmd = new SqlCommand(query, sqlConnection1);
@@ -99,9 +113,9 @@ namespace RallyUpServer
                 }
 
                 // Return list of friends
-                else if(clientData.Split('≡')[0] == "GetFriends")
+                else if(clientData.Split(':')[0] == "GetFriends")
                 {
-                    string username = clientData.Split('≡')[1];
+                    string username = clientData.Substring(11);
                     List<List<string>> friendList = new List<List<string>>();
                     string query = "SELECT friendName FROM RallyUpFriend WHERE RallyUpFriend.username = @username";
                     string friendInfoQuery = "SELECT screenName FROM RallyUpUser WHERE RallyUpUser.username = @friendName";
@@ -110,48 +124,64 @@ namespace RallyUpServer
                     try
                     {
                         SqlDataReader reader;
-                        
                         sqlConnection1.Open();
                         reader = cmd.ExecuteReader();
                         int i = 0;
                         while (reader.Read())
                         {
+                            string friendUsername = (reader.GetValue(0)).ToString();
                             friendList.Add(new List<string>());
-                            friendList[i].Add((reader.GetValue(0)).ToString());
+                            friendList[i].Add(friendUsername.Length.ToString());
+                            friendList[i].Add(friendUsername);
                             i++;
                         }
-                        reader.Close();
                         foreach (List<string> friend in friendList)
                         {
-                            cmd = new SqlCommand(friendInfoQuery, sqlConnection1);
-                            cmd.Parameters.AddWithValue("@friendName", friend[0]);
+                            reader.Close();
+                            cmd.CommandText = friendInfoQuery;
+                            cmd.Parameters.AddWithValue("@friendName", friend[1]);
                             reader = cmd.ExecuteReader();
                             while (reader.Read())
                             {
-                                friend.Add(reader.GetValue(0).ToString());
+                                string friendScreenName = reader.GetValue(0).ToString();
+                                friend.Add(friendScreenName.Length.ToString());
+                                friend.Add(friendScreenName);
                             }
-                            reader.Close();
+                            cmd.Parameters.Clear();
                         }
                         string friendListString = "";
                         foreach (List<string> friend in friendList)
                         {
-                            friendListString += friend[0] + '≡' + friend[1] + '‗';
+                            friendListString += friend[0] + ',' + friend[2] + ',';
+                        }
+                        friendListString = friendListString.TrimEnd(',');
+                        friendListString += ':';
+                        foreach (List<string> friend in friendList)
+                        {
+                            friendListString += friend[1] + friend[3];
                         }
                         clientSocket.WriteString(friendListString);
                         Console.WriteLine(friendListString);
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         clientSocket.WriteString("FriendsNotFound");
                         Console.WriteLine("FriendsNotFound");
+                        Console.WriteLine(ex.Message);
                     }
                 }
-                else if(clientData.Split('≡')[0] == "AddFriend")
+                else if(clientData.Split(':')[0] == "AddFriend")
                 {
+                    string[] prefix = { clientData.Split(':')[0], clientData.Split(':')[1] };
+                    int usernameLength = Convert.ToInt32(prefix[1].Split(',')[0]);
+                    int friendNameLength = Convert.ToInt32(prefix[1].Split(',')[1]);
+                    int prefixLength = 11 + prefix[1].Length;
+                    string suffix = clientData.Substring(prefixLength);
+                    string username = suffix.Substring(0, usernameLength);
+                    string friendName = suffix.Substring(usernameLength, friendNameLength);
+
                     try
                     {
-                        string username = clientData.Split('≡')[1];
-                        string friendName = clientData.Split('≡')[2];
                         string checkExistsQuery = "SELECT username FROM RallyUpUser WHERE username = @friendName";
                         string insertQuery = "INSERT INTO RallyUpFriend VALUES (@username, @friendName)";
                         SqlCommand cmd = new SqlCommand(checkExistsQuery, sqlConnection1);
@@ -188,8 +218,9 @@ namespace RallyUpServer
                         clientSocket.WriteString("ErrorAddingFriend");
                     }
                 }
-                else if(clientData.Split('≡')[0] == "Rally")
+                else if(clientData.Split(':')[0] == "Rally")
                 {
+                    // Add parsing stuff
                     string senderName = clientData.Split('≡')[1];
                     string tagline = clientData.Split('≡')[2];
                     List<string> recipients = new List<string>();

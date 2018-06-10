@@ -25,7 +25,7 @@ namespace RallyUp
             SetContentView(Resource.Layout.RunningRallyPage);
             ActionBar.Hide();
 
-            string rallyInfo = this.Intent.GetStringExtra("RallyInfo");
+            string rallyInfo = Intent.GetStringExtra("RallyInfo");
             string[] splitRallyInfo = rallyInfo.Split('≡');
             string rallyTagline = splitRallyInfo[0];
             IList<Friend> rallyFriendsList = new List<Friend>();

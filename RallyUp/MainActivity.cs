@@ -58,8 +58,8 @@ namespace RallyUp
                         socket = new TcpClient("192.168.1.2", 3292);
                         socket.ReceiveTimeout = 1000;
                         errorBox.Text = "";
-                        socket.WriteString("Login≡" + userBox.Text + '≡' + passBox.Text);
-
+                        socket.WriteString("Login:" + userBox.Text.Length + ',' + passBox.Text.Length + ':' + userBox.Text + passBox.Text);
+                        string returnString = socket.ReadString();
                         errorBox.Text = returnString;
                         if (returnString == "ValidCredentials")
                         {
@@ -84,7 +84,7 @@ namespace RallyUp
                     }
                     catch
                     {
-                        //errorBox.Text = "Server connection failed. Make sure you're online.";
+                        errorBox.Text = "Server connection failed. Make sure you're online.";
                     }
                 }
             };

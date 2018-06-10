@@ -61,55 +61,56 @@ namespace RallyUp
             {
                 socket = new TcpClient("192.168.1.2", 3292);
                 socket.ReceiveTimeout = 1000;
-                socket.WriteString("GetFriends≡" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
+                socket.WriteString("GetFriends:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", ""));
                 string friendListString = socket.ReadString();
-                string[] firstList = friendListString.Split('‗');
-                List<Friend> friendDataList = new List<Friend>();
-                if (firstList.Length > 0)
-                { 
-                    firstList  = firstList.Take(firstList.Count() - 1).ToArray();
-
+                string[] nameLengths = friendListString.Split(':')[0].Split(',');
+                string nameListString = friendListString.Substring(friendListString.Split(':')[0].Length + 1);
+                List<Friend> firstList = new List<Friend>();
+                int firstPoint = 0;
+                int secondPoint;
+                int thirdPoint;
+                for (int i = 0; i < nameLengths.Length; i += 2)
+                {
+                    secondPoint = firstPoint + Convert.ToInt32(nameLengths[i]);
+                    thirdPoint = secondPoint + Convert.ToInt32(nameLengths[i + 1]);
+                    firstList.Add(new Friend(nameListString.Substring(secondPoint, Convert.ToInt32(nameLengths[i + 1])), nameListString.Substring(firstPoint, Convert.ToInt32(nameLengths[i]))));
+                    firstPoint = thirdPoint;
+                }
+                if (firstList.Count > 0)
+                {
                     ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
                     ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
                     prefsEditor.Remove("FriendList");
-                    prefsEditor.PutStringSet("FriendList", firstList);
+                    prefsEditor.PutString("FriendList", friendListString);
                     prefsEditor.Commit();
-
-                    foreach (string friend in firstList)
-                    {
-                        friendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
-                    }
                 }
-                friendList = friendDataList;
+                friendList = firstList;
+                return friendList;
             }
             catch
             {
                 if (PreferenceManager.GetDefaultSharedPreferences(this).Contains("FriendList"))
                 {
                     List<Friend> localFriendDataList = new List<Friend>();
-                    foreach (string friend in PreferenceManager.GetDefaultSharedPreferences(this).GetStringSet("FriendList", new List<string>()))
+                    string friendListString = PreferenceManager.GetDefaultSharedPreferences(this).GetString("FriendList", "");
+                    string[] nameLengths = friendListString.Split(':')[0].Split(',');
+                    string nameListString = friendListString.Substring(friendListString.Split(':')[0].Length + 1);
+                    List<Friend> firstList = new List<Friend>();
+                    int firstPoint = 0;
+                    int secondPoint;
+                    int thirdPoint;
+                    for (int i = 0; i < nameLengths.Length; i += 2)
                     {
-                        localFriendDataList.Add(new Friend(friend.Split('≡')[1], friend.Split('≡')[0]));
+                        secondPoint = firstPoint + Convert.ToInt32(nameLengths[i]);
+                        thirdPoint = secondPoint + Convert.ToInt32(nameLengths[i + 1]);
+                        firstList.Add(new Friend(nameListString.Substring(secondPoint, Convert.ToInt32(nameLengths[i + 1])), nameListString.Substring(firstPoint, Convert.ToInt32(nameLengths[i]))));
+                        firstPoint = thirdPoint;
                     }
+                    localFriendDataList = firstList;
                     return localFriendDataList;
                 }
-                else
-                {
-                    return new List<Friend>();
-                }
             }
-            /*
-            friendList.Add(new Friend("April", "May"));
-            friendList.Add(new Friend("Davy Jones", "Poseidon"));
-            friendList.Add(new Friend("Chilly Girl", "Alysia"));
-            friendList.Add(new Friend("NomNom", "Chomper"));
-            friendList.Add(new Friend("Tuxy", "Tusky"));
-            friendList.Add(new Friend("Daisy Bennet", "Skye"));
-            friendList.Add(new Friend("Asami Whats Her Last Name", "FutureIndustries"));
-            friendList.Add(new Friend("Willow You Hold Me", "LetMeGo"));
-            friendList.Add(new Friend("Coely Puffs", "isLost"));
-            */
-            return friendList;
+            return new List<Friend>();
         }
     }
 
