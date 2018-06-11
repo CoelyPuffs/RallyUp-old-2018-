@@ -44,6 +44,7 @@ namespace RallyUp
             rallyMenuButton.Click += delegate
             {
                 StartActivity(typeof(MenuActivity));
+                OverridePendingTransition(Resource.Animation.abc_fade_in, Resource.Animation.abc_fade_out);
                 Finish();
             };
 
@@ -55,10 +56,10 @@ namespace RallyUp
                     if (adapter.friendBoxes[i].isSelected)
                     {
                         List<string> thisFriend = new List<string>();
-                        thisFriend.Add(adapter.friends[i].screenName);
-                        thisFriend.Add(adapter.friends[i].screenName.Length.ToString());
                         thisFriend.Add(adapter.friends[i].username);
+                        thisFriend.Add(adapter.friends[i].screenName);
                         thisFriend.Add(adapter.friends[i].username.Length.ToString());
+                        thisFriend.Add(adapter.friends[i].screenName.Length.ToString());
                         selectedFriends.Add(thisFriend);
                     }
                 }
@@ -68,27 +69,38 @@ namespace RallyUp
                     {
                         TcpClient socket = new TcpClient("192.168.1.2", 3292);
                         socket.ReceiveTimeout = 1000;
-                        if (rallyTaglineBox.Text != "")
+                        if (rallyTaglineBox.Text == "")
+                        {
+                            tagline = "Rally Up!";
+                        }
+                        else
                         {
                             tagline = rallyTaglineBox.Text;
                         }
                         
                         string friendNamesString = "";
+                        string runningRallyFriendNamesString = "";
                         foreach (List<string> friend in selectedFriends)
                         {
-                            friendNamesString += friend[0] + friend[2];
+                            friendNamesString += friend[0];
+                            runningRallyFriendNamesString += friend[0] + friend[1];
                         }
 
                         string friendLengthsString = "";
+                        string runningRallyFriendLengthsString = "";
                         foreach (List<string> friend in selectedFriends)
                         {
-                            friendLengthsString += friend[1] + ',' + friend[3] + ',';
+                            friendLengthsString += friend[2] + ',';
+                            runningRallyFriendLengthsString += friend[2] + ',' + friend[3] + ',';
                         }
                         friendLengthsString = friendLengthsString.TrimEnd(',');
+                        runningRallyFriendLengthsString = runningRallyFriendLengthsString.TrimEnd(',');
 
-                        socket.WriteString("Rally:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "").Length + ',' + tagline.Length + ',' + friendLengthsString + ':' + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + tagline + friendNamesString);
+                        string rallyInfo = "Rally:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "").Length + ',' + tagline.Length + ',' + friendLengthsString + ':' + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + tagline + friendNamesString;
+                        string runningRallyInfo = "Rally:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "").Length + ',' + tagline.Length + ',' + runningRallyFriendLengthsString + ':' + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + tagline + runningRallyFriendNamesString;
+                        socket.WriteString(rallyInfo);
                         Intent myIntent = new Intent(this, typeof(RunningRallyActivity));
-                        myIntent.PutExtra("RallyInfo", tagline + '≡' + selectedFriends);
+                        myIntent.PutExtra("RallyInfo", runningRallyInfo);
                         StartActivity(myIntent);
                         Finish();
                     }

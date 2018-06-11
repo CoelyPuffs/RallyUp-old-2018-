@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 using Android.App;
 using Android.Content;
@@ -25,25 +26,58 @@ namespace RallyUp
             SetContentView(Resource.Layout.RunningRallyPage);
             ActionBar.Hide();
 
-            string rallyInfo = Intent.GetStringExtra("RallyInfo");
-            string[] splitRallyInfo = rallyInfo.Split('≡');
-            string rallyTagline = splitRallyInfo[0];
-            IList<Friend> rallyFriendsList = new List<Friend>();
-
-            for (int i = 1; i < splitRallyInfo.Length; i++)
-            {
-                rallyFriendsList.Add(new Friend(splitRallyInfo[i].Split('‗')[0], splitRallyInfo[i].Split('‗')[1]));
-            }
-
             TextView runningRallyTaglineBox = FindViewById<TextView>(Resource.Id.runningRallyTagline);
             TextView runningRallyTimer = FindViewById<TextView>(Resource.Id.runningRallyTimer);
             RecyclerView runningRallyFriendsList = FindViewById<RecyclerView>(Resource.Id.runningRallyFriendsList);
+
+            string rallyInfo = Intent.GetStringExtra("RallyInfo");
+            string[] prefix = { rallyInfo.Split(':')[0], rallyInfo.Split(':')[1] };
+            string[] lengthsArray = prefix[1].Split(',');
+            string infoString = rallyInfo.Substring(prefix[0].Length + prefix[1].Length + 2);
+            string senderName = infoString.Substring(0, Convert.ToInt32(lengthsArray[0]));
+            string tagline = infoString.Substring(Convert.ToInt32(lengthsArray[0]), Convert.ToInt32(lengthsArray[1]));
+            List<Friend> rallyFriendsList = new List<Friend>();
+            int firstPoint = Convert.ToInt32(lengthsArray[0]) + Convert.ToInt32(lengthsArray[1]);
+            int secondPoint;
+            int thirdPoint;
+            for (int i = 2; i < lengthsArray.Length; i += 2)
+            {
+                secondPoint = firstPoint + Convert.ToInt32(lengthsArray[i]);
+                thirdPoint = secondPoint + Convert.ToInt32(lengthsArray[i + 1]);
+                rallyFriendsList.Add(new Friend(infoString.Substring(secondPoint, Convert.ToInt32(lengthsArray[i + 1])), infoString.Substring(firstPoint, Convert.ToInt32(lengthsArray[i]))));
+                firstPoint = thirdPoint;
+            }
+
+            runningRallyTaglineBox.Text = tagline;
+
+            tickTimer(runningRallyTimer);
 
             RunningRallyFriendAdapter adapter = new RunningRallyFriendAdapter(rallyFriendsList);
             runningRallyFriendsList.HasFixedSize = true;
             runningRallyFriendsList.SetLayoutManager(new LinearLayoutManager(this));
             runningRallyFriendsList.SetAdapter(adapter);
 
+        }
+
+        async void tickTimer(TextView timerBox)
+        {
+            int minutes = 10;
+            int seconds = 0;
+            while (minutes > 0 || seconds > 0)
+            {
+                await Task.Delay(1000);
+                if (seconds == 0)
+                {
+                    minutes--;
+                    seconds = 59;
+                }
+                else
+                {
+                    seconds--;
+                }
+                timerBox.Text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            }
+            timerBox.Text = "Time's Up!";
         }
     }
 
