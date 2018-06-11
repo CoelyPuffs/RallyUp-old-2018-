@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#eeeeee">
+            <Button
+                android:id="@+id/rallyMenuButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Menu"
+                android:textColor="#000000"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+        <EditText
+            android:id="@+id/rallyTaglineBox"
+            android:hint="Rally Title"
+            android:textColorHint="#999999"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="30sp"
+            android:textColor="#000000"
+            android:background="@android:color/transparent" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/addRallyFriendsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/rallyUpButton"
+        android:text="Rally Up!"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@android:color/transparent"
+        android:textColor="#000000"
+        android:textSize="40sp"
+        android:paddingBottom="20dp" />
+</FrameLayout>

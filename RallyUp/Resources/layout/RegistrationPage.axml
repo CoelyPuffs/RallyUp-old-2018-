@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <TextView
+        android:text="Create a new account"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="32sp" />
+    <TextView
+        android:id="@+id/registrationErrorBox"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="60sp" />
+  <TextView
+    android:text ="Screen Name (How others will identify you)"
+    android:layout_height="wrap_content"
+    android:layout_width ="wrap_content"
+    android:layout_marginTop="20sp" />
+  <EditText
+    android:id ="@+id/screenNameBox"
+    android:layout_height ="wrap_content"
+    android:layout_width="match_parent"
+    android:gravity="center"/>
+    <TextView
+        android:text="New Username"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20sp" />
+    <EditText
+        android:id="@+id/newUserBox"
+        android:inputType="textVisiblePassword"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <TextView
+        android:text="Password"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+    <EditText
+        android:id="@+id/newPassBox"
+        android:password="true"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <Button
+        android:id="@+id/newRegisterButton"
+        android:text="Register"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15sp" />
+</LinearLayout>

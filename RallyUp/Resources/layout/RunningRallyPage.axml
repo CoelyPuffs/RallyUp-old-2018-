@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+    <TextView
+        android:id="@+id/runningRallyTagline"
+        android:text="Rally Up!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        android:gravity="center_horizontal" />
+    <TextView
+        android:id="@+id/runningRallyTimer"
+        android:text="10:00"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="100sp"
+        android:textColor="#000000"
+        android:gravity="center_horizontal" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/runningRallyFriendsList"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+</LinearLayout>

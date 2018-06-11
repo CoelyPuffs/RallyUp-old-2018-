@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
@@ -12,8 +13,6 @@ namespace RallyUpServer
 {
     class Server
     {
-        public static Dictionary<string, TcpClient> clientele = new Dictionary<string, TcpClient>();
-
         static void Main()
         {
             var serverSocket = new TcpListener(IPAddress.Any, 3292);
@@ -22,12 +21,9 @@ namespace RallyUpServer
             while (true)
             {
                 TcpClient clientSocket = serverSocket.AcceptTcpClient();
-                string clientData = clientSocket.getString();
-                clientele.Add(clientData, clientSocket);
-                Console.Write("Client Connected: ");
-                Console.WriteLine(clientData);
-                LilClient newLil = new LilClient();
-                newLil.initializeClient(clientSocket,clientData);
+                Console.WriteLine("Client Connected");
+                LilClient newLil = new LilClient(clientSocket);
+                new Thread(newLil.runClientThread).Start();
             }
         }
     }
