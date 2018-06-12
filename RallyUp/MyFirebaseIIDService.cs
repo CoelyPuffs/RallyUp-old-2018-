@@ -16,6 +16,7 @@ namespace FCMClient
             Log.Debug(TAG, "Refreshed token: " + refreshedToken);
             SendRegistrationToServer(refreshedToken);
         }
+
         void SendRegistrationToServer(string token)
         {
             // Add custom implementation, as needed.

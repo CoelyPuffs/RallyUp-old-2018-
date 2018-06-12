@@ -2,65 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffcc66">
+    <Button
+        android:id="@+id/rallyButton"
+        android:text="Rally Icon Here"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:textColor="#000000"
+        android:background="#fcbb55"
+        android:layout_margin="15dp" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/friendButton"
+            android:text="Friends Icon Here"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-            <Button
-                android:id="@+id/rallyButton"
-                android:text="Rally Icon Here"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <Button
-                android:id="@+id/scheduleButton"
-                android:text="Schedule Icon Here"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <Button
-                android:id="@+id/profileButton"
-                android:text="Profile Icon Here"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:background="#fcbb55"
+            android:layout_margin="15dp" />
+        <Button
+            android:id="@+id/settingsButton"
+            android:text="Settings Icon Here"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-            <Button
-                android:id="@+id/friendButton"
-                android:text="Friends Icon Here"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <Button
-                android:id="@+id/calendarButton"
-                android:text="Calendar Icon Here"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <Button
-                android:id="@+id/settingsButton"
-                android:text="Settings Icon Here"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-        </LinearLayout>
+            android:layout_weight="1"
+            android:textColor="#000000"
+            android:background="#fcbb55"
+            android:layout_margin="15dp" />
     </LinearLayout>
-    <Button
-        android:id="@+id/aboutButton"
-        android:text="About Icon Here"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 </LinearLayout>

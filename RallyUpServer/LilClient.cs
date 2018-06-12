@@ -113,7 +113,7 @@ namespace RallyUpServer
                 }
 
                 // Return list of friends
-                else if(clientData.Split(':')[0] == "GetFriends")
+                else if (clientData.Split(':')[0] == "GetFriends")
                 {
                     string username = clientData.Substring(11);
                     List<List<string>> friendList = new List<List<string>>();
@@ -163,14 +163,16 @@ namespace RallyUpServer
                         clientSocket.WriteString(friendListString);
                         Console.WriteLine(friendListString);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         clientSocket.WriteString("FriendsNotFound");
                         Console.WriteLine("FriendsNotFound");
                         Console.WriteLine(ex.Message);
                     }
                 }
-                else if(clientData.Split(':')[0] == "AddFriend")
+
+                // Friend request sent
+                else if (clientData.Split(':')[0] == "AddFriend")
                 {
                     string[] prefix = { clientData.Split(':')[0], clientData.Split(':')[1] };
                     int usernameLength = Convert.ToInt32(prefix[1].Split(',')[0]);
@@ -183,7 +185,7 @@ namespace RallyUpServer
                     try
                     {
                         string checkExistsQuery = "SELECT username FROM RallyUpUser WHERE username = @friendName";
-                        string insertQuery = "INSERT INTO RallyUpFriend VALUES (@username, @friendName)";
+                        string insertQuery = "INSERT INTO RallyUpPendingFriend VALUES (@username, @friendName)";
                         SqlCommand cmd = new SqlCommand(checkExistsQuery, sqlConnection1);
                         cmd.Parameters.AddWithValue("@friendName", friendName);
                         sqlConnection1.Open();
@@ -200,11 +202,11 @@ namespace RallyUpServer
                             readResult = cmd.ExecuteNonQuery();
                             if (readResult == 1)
                             {
-                                clientSocket.WriteString("FriendAdded");
+                                clientSocket.WriteString("FriendRequestAdded");
                             }
                             else
                             {
-                                clientSocket.WriteString("ErrorAddingFriend");
+                                clientSocket.WriteString("ErrorAddingFriendRequest");
                             }
                             sqlConnection1.Close();
                         }
@@ -215,10 +217,84 @@ namespace RallyUpServer
                     }
                     catch
                     {
+                        clientSocket.WriteString("ErrorAddingFriendRequest");
+                    }
+                }
+
+                // Friend request accepted
+                else if (clientData.Split(':')[0] == "AcceptFriend")
+                {
+                    string[] prefix = { clientData.Split(':')[0], clientData.Split(':')[1] };
+                    int usernameLength = Convert.ToInt32(prefix[1].Split(',')[0]);
+                    int friendNameLength = Convert.ToInt32(prefix[1].Split(',')[1]);
+                    int prefixLength = 14 + prefix[1].Length;
+                    string suffix = clientData.Substring(prefixLength);
+                    string username = suffix.Substring(0, usernameLength);
+                    string friendName = suffix.Substring(usernameLength, friendNameLength);
+
+                    try
+                    {
+                        string insertQuery = "INSERT INTO RallyUpFriend VALUES (@username, @friendName)";
+                        SqlCommand cmd = new SqlCommand(insertQuery, sqlConnection1);
+                        sqlConnection1.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@friendName", friendName);
+                        int readResult;
+                        sqlConnection1.Open();
+                        readResult = cmd.ExecuteNonQuery();
+                        if (readResult == 1)
+                        {
+                            clientSocket.WriteString("FriendAdded");
+                        }
+                        else
+                        {
+                            clientSocket.WriteString("ErrorAddingFriend");
+                        }
+                        sqlConnection1.Close();
+
+                        sqlConnection1.Open();
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@username", friendName);
+                        cmd.Parameters.AddWithValue("@friendName", username);
+                        cmd.ExecuteNonQuery();
+                        sqlConnection1.Close();
+
+                        sqlConnection1.Open();
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = "DELETE FROM RallyUpPendingFriend WHERE username = @username AND friendName = @friendName";
+                        cmd.Parameters.AddWithValue("@username", friendName);
+                        cmd.Parameters.AddWithValue("@friendName", username);
+                        cmd.ExecuteNonQuery();
+                        sqlConnection1.Close();
+                    }
+                    catch
+                    {
                         clientSocket.WriteString("ErrorAddingFriend");
                     }
                 }
-                else if(clientData.Split(':')[0] == "Rally")
+
+                // Friend request declined
+                else if (clientData.Split(':')[0] == "DeclineFriend")
+                {
+                    string[] prefix = { clientData.Split(':')[0], clientData.Split(':')[1] };
+                    int usernameLength = Convert.ToInt32(prefix[1].Split(',')[0]);
+                    int friendNameLength = Convert.ToInt32(prefix[1].Split(',')[1]);
+                    int prefixLength = 14 + prefix[1].Length;
+                    string suffix = clientData.Substring(prefixLength);
+                    string username = suffix.Substring(0, usernameLength);
+                    string friendName = suffix.Substring(usernameLength, friendNameLength);
+
+                    sqlConnection1.Open();
+                    SqlCommand cmd = new SqlCommand("DELETE FROM RallyUpPendingFriend WHERE username = @username AND friendName = @friendName", sqlConnection1);
+                    cmd.Parameters.AddWithValue("@username", friendName);
+                    cmd.Parameters.AddWithValue("@friendName", username);
+                    cmd.ExecuteNonQuery();
+                    sqlConnection1.Close();
+                }
+
+                // Rally Up!
+                else if (clientData.Split(':')[0] == "Rally")
                 {
                     LilRally newRally = new LilRally(clientData, DateTime.Now);
                     new Thread(newRally.runLilRally).Start();
@@ -250,6 +326,62 @@ namespace RallyUpServer
                         body = notifyBody,
                         title = "New Rally from " + notifySender,
                         sound = "Enabled"
+                    }
+                };
+
+                var serializer = new JavaScriptSerializer();
+                var json = serializer.Serialize(data);
+                Byte[] byteArray = Encoding.UTF8.GetBytes(json);
+                tRequest.Headers.Add(string.Format("Authorization: key=AAAA7fkMFK0:APA91bHtsHvR58_yg1wrKu2nGP6rmOhHkOM_3Zapq5fo4ZBKmvngPJiCjirBmIRHFXjAR82xFccSqxVt-IAYobnMns_1hZmxQqqcpaitip-ae9Y4dcwlLv5T8xHpLeACqbiLRLQgEHCB", applicationID));
+                tRequest.Headers.Add(string.Format("Sender: id={0}", senderId));
+                tRequest.ContentLength = byteArray.Length;
+
+                using (Stream dataStream = tRequest.GetRequestStream())
+                {
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                    using (WebResponse tResponse = tRequest.GetResponse())
+                    {
+                        using (Stream dataStreamResponse = tResponse.GetResponseStream())
+                        {
+                            using (StreamReader tReader = new StreamReader(dataStreamResponse))
+                            {
+                                String sResponseFromServer = tReader.ReadToEnd();
+                                str = sResponseFromServer;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                str = ex.Message;
+            }
+            Console.WriteLine(str);
+        }
+
+        public static void SendFriendRequest(string recipientFriendUsername, string sendingFriendScreenName)
+        {
+            string str;
+            try
+            {
+                string applicationID = "1:1022085567661:android:794e934c87823234";
+                string senderId = "1022085567661";
+                WebRequest tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Method = "post";
+                tRequest.ContentType = "application/json";
+                var data = new
+                {
+                    to = "/topics/" + recipientFriendUsername,
+                    notification = new
+                    {
+                        body = sendingFriendScreenName + "wants to be your friend",
+                        title = "New friend request from " + sendingFriendScreenName,
+                        click_action = "AcceptFriendActivity",
+                        sound = "Enabled"
+                    },
+                    data = new
+                    {
+                        friendScreenName = sendingFriendScreenName
                     }
                 };
 

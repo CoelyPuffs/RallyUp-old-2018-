@@ -46,9 +46,9 @@ namespace RallyUp
                     socket.ReceiveTimeout = 1000;
                     socket.WriteString("AddFriend:" + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "").Length + ',' + friendNameBox.Text.Length + ':' + PreferenceManager.GetDefaultSharedPreferences(this).GetString("currentUsername", "") + friendNameBox.Text);
                     string replyString = socket.ReadString();
-                    if (replyString == "FriendAdded")
+                    if (replyString == "FriendRequestAdded")
                     {
-                        addFriendErrorBox.Text = "Friend added!";
+                        addFriendErrorBox.Text = "Friend request sent";
                     }
                     else if (replyString == "FriendNotExist")
                     {
@@ -56,7 +56,7 @@ namespace RallyUp
                     }
                     else
                     {
-                        addFriendErrorBox.Text = "Error adding friend";
+                        addFriendErrorBox.Text = "Error sending friend request";
                     }
                 }
                 catch

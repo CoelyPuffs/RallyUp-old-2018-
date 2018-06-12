@@ -23,7 +23,6 @@ namespace RallyUp
             ActionBar.Hide();
 
             Button friendButton = FindViewById<Button>(Resource.Id.friendButton);
-            Button calendarButton = FindViewById<Button>(Resource.Id.calendarButton);
             Button rallyButton = FindViewById<Button>(Resource.Id.rallyButton);
             Button settingsButton = FindViewById<Button>(Resource.Id.settingsButton);
 

@@ -36,31 +36,42 @@ namespace RallyUp
 
             registerButton.Click += delegate
             {
-                try
+                if (newUserBox.Text.Length < 5 || newUserBox.Text.Length > 20)
                 {
-                    socket = new TcpClient("192.168.1.2", 3292);
-                    socket.WriteString("Register:" + newUserBox.Text.Length + ',' + newPassBox.Text.Length + ',' + screenNameBox.Text.Length + ':' + newUserBox.Text + newPassBox.Text + screenNameBox.Text);
-                    errorBox.Text = "";
-                    if (socket.ReadString() == "RegistrationSuccessful")
-                    {
-                        socket.Close();
-                        errorBox.Text = "Registration successful. Logging you in.";
-                        ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
-                        ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
-                        prefsEditor.PutString("currentUsername", newUserBox.Text);
-                        prefsEditor.PutString("currentPassword", newPassBox.Text);
-                        prefsEditor.PutBoolean("isAuthenticated", true);
-                        prefsEditor.Commit();
-                        this.Finish();
-                    }
-                    else if (socket.ReadString() == "UsernameAlreadyRegistered")
-                    {
-                        errorBox.Text = "Username is already taken.";
-                    }
+                    errorBox.Text = "Username must be between 5 and 20 characters";
                 }
-                catch
+                else if (newPassBox.Text.Length < 5 || newPassBox.Text.Length > 30)
                 {
-                    errorBox.Text = "Server connection failed. Make sure you're online.";
+                    errorBox.Text = "Password must be at least 5 characters";
+                }
+                else
+                {
+                    try
+                    {
+                        socket = new TcpClient("192.168.1.2", 3292);
+                        socket.WriteString("Register:" + newUserBox.Text.Length + ',' + newPassBox.Text.Length + ',' + screenNameBox.Text.Length + ':' + newUserBox.Text + newPassBox.Text + screenNameBox.Text);
+                        errorBox.Text = "";
+                        if (socket.ReadString() == "RegistrationSuccessful")
+                        {
+                            socket.Close();
+                            errorBox.Text = "Registration successful. Logging you in.";
+                            ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
+                            ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
+                            prefsEditor.PutString("currentUsername", newUserBox.Text);
+                            prefsEditor.PutString("currentPassword", newPassBox.Text);
+                            prefsEditor.PutBoolean("isAuthenticated", true);
+                            prefsEditor.Commit();
+                            this.Finish();
+                        }
+                        else if (socket.ReadString() == "UsernameAlreadyRegistered")
+                        {
+                            errorBox.Text = "Username is already taken.";
+                        }
+                    }
+                    catch
+                    {
+                        errorBox.Text = "Server connection failed. Make sure you're online.";
+                    }
                 }
             };
         }

@@ -56,11 +56,17 @@ namespace RallyUpServer
                 var data = new
                 {
                     to = "/topics/" + notifyTopic,
+                    time_to_live = 600,
                     notification = new
                     {
                         body = notifyBody,
                         title = "New Rally from " + notifySender,
-                        sound = "Enabled"
+                        click_action = "AcceptRallyActivity"
+                    },
+                    data = new
+                    {
+                        rallyStarter = notifySender,
+                        rallyTagine = notifyBody
                     }
                 };
 

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffcc66">
     <Button
         android:id="@+id/addFriendBackButton"
         android:text="Back"
@@ -17,7 +18,8 @@
             android:text="Add a friend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="32sp" />
+            android:textSize="32sp"
+            android:textColor="#000000" />
         <TextView
             android:text=""
             android:id="@+id/addFriendErrorBox"
@@ -32,13 +34,19 @@
             android:layout_marginTop="20sp" />
         <EditText
             android:id="@+id/friendNameBox"
-            android:layout_width="match_parent"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="#000000"
+            android:background="#eeeedd" />
         <Button
             android:id="@+id/addFriendUsernameButton"
             android:text="Add Friend"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:background="#fcbb55"
+            android:layout_marginTop="15dp"
+            android:padding="15sp" />
     </LinearLayout>
 </LinearLayout>
