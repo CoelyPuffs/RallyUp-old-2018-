@@ -12,6 +12,8 @@ using Android.Widget;
 using Android.Preferences;
 using Android.Content.PM;
 
+using Firebase.Messaging;
+
 namespace RallyUp
 {
     [Activity(Label = "SettingsActivity", ScreenOrientation = ScreenOrientation.Portrait)]
@@ -29,6 +31,7 @@ namespace RallyUp
             {
                 ISharedPreferences userPrefs = PreferenceManager.GetDefaultSharedPreferences(this);
                 ISharedPreferencesEditor prefsEditor = userPrefs.Edit();
+                FirebaseMessaging.Instance.UnsubscribeFromTopic(userPrefs.GetString("currentUsername", ""));
                 prefsEditor.Remove("currentUsername");
                 prefsEditor.Remove("currentPassword");
                 prefsEditor.PutBoolean("isAuthenticated", false);

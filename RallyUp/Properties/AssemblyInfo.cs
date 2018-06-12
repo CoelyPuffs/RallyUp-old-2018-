@@ -14,7 +14,7 @@ using Android.App;
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: Application(Icon = "@drawable/icon1")]
+[assembly: Application(Icon = "@drawable/icon")]
 [assembly: ComVisible(false)]
 
 // Version information for an assembly consists of the following four values:

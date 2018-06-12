@@ -48,7 +48,7 @@ namespace RallyUp
             {
                 if (userBox.Text == "boop")
                 {
-                    StartActivity(typeof(MenuActivity));
+                    StartActivity(typeof(PingActivity));
                     this.Finish();
                 }
                 else
