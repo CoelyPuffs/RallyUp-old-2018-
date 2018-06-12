@@ -50,6 +50,7 @@ namespace RallyUp
                     string acceptFriendString = "AcceptFriend:" + myUsername.Length + ',' + friendName.Length + ':' + myUsername + friendName;
                     socket.WriteString(acceptFriendString);
                     StartActivity(typeof(FriendsActivity));
+                    this.Finish();
                 }
                 catch
                 {
@@ -67,6 +68,7 @@ namespace RallyUp
                     string acceptFriendString = "DeclineFriend:" + myUsername.Length + ',' + friendName.Length + ':' + myUsername + friendName;
                     socket.WriteString(acceptFriendString);
                     StartActivity(typeof(FriendsActivity));
+                    this.Finish();
                 }
                 catch
                 {

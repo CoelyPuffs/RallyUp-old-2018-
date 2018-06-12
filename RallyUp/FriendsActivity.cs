@@ -144,7 +144,7 @@ namespace RallyUp
         override public void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             FriendViewHolder fvh = holder as FriendViewHolder;
-            fvh.flagBox.SetImageResource(Resource.Drawable.icon);
+            fvh.flagBox.SetImageResource(Resource.Drawable.placeholderProfilePhoto);
             fvh.nameBox.Text = friends[position].screenName;
         }
 

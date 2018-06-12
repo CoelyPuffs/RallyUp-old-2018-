@@ -1990,23 +1990,26 @@ namespace RallyUp
 			// aapt resource value: 0x7f090070
 			public const int acceptFriendErrorBox = 2131296368;
 			
-			// aapt resource value: 0x7f090076
-			public const int acceptRallyButton = 2131296374;
+			// aapt resource value: 0x7f090077
+			public const int acceptRallyButton = 2131296375;
 			
-			// aapt resource value: 0x7f090075
-			public const int acceptRallyFriendsList = 2131296373;
+			// aapt resource value: 0x7f090074
+			public const int acceptRallyErrorBox = 2131296372;
+			
+			// aapt resource value: 0x7f090076
+			public const int acceptRallyFriendsList = 2131296374;
 			
 			// aapt resource value: 0x7f090073
 			public const int acceptRallyTagline = 2131296371;
 			
-			// aapt resource value: 0x7f090074
-			public const int acceptRallyTimer = 2131296372;
+			// aapt resource value: 0x7f090075
+			public const int acceptRallyTimer = 2131296373;
 			
-			// aapt resource value: 0x7f09009c
-			public const int acceptanceBox = 2131296412;
+			// aapt resource value: 0x7f09009d
+			public const int acceptanceBox = 2131296413;
 			
-			// aapt resource value: 0x7f09008a
-			public const int action0 = 2131296394;
+			// aapt resource value: 0x7f09008b
+			public const int action0 = 2131296395;
 			
 			// aapt resource value: 0x7f090060
 			public const int action_bar = 2131296352;
@@ -2029,17 +2032,17 @@ namespace RallyUp
 			// aapt resource value: 0x7f09003e
 			public const int action_bar_title = 2131296318;
 			
-			// aapt resource value: 0x7f090087
-			public const int action_container = 2131296391;
+			// aapt resource value: 0x7f090088
+			public const int action_container = 2131296392;
 			
 			// aapt resource value: 0x7f090061
 			public const int action_context_bar = 2131296353;
 			
-			// aapt resource value: 0x7f09008e
-			public const int action_divider = 2131296398;
+			// aapt resource value: 0x7f09008f
+			public const int action_divider = 2131296399;
 			
-			// aapt resource value: 0x7f090088
-			public const int action_image = 2131296392;
+			// aapt resource value: 0x7f090089
+			public const int action_image = 2131296393;
 			
 			// aapt resource value: 0x7f090003
 			public const int action_menu_divider = 2131296259;
@@ -2056,11 +2059,11 @@ namespace RallyUp
 			// aapt resource value: 0x7f090040
 			public const int action_mode_close_button = 2131296320;
 			
-			// aapt resource value: 0x7f090089
-			public const int action_text = 2131296393;
+			// aapt resource value: 0x7f09008a
+			public const int action_text = 2131296394;
 			
-			// aapt resource value: 0x7f090097
-			public const int actions = 2131296407;
+			// aapt resource value: 0x7f090098
+			public const int actions = 2131296408;
 			
 			// aapt resource value: 0x7f090041
 			public const int activity_chooser_view_content = 2131296321;
@@ -2068,17 +2071,17 @@ namespace RallyUp
 			// aapt resource value: 0x7f090022
 			public const int add = 2131296290;
 			
-			// aapt resource value: 0x7f090078
-			public const int addFriendBackButton = 2131296376;
-			
 			// aapt resource value: 0x7f090079
-			public const int addFriendErrorBox = 2131296377;
+			public const int addFriendBackButton = 2131296377;
 			
-			// aapt resource value: 0x7f09007b
-			public const int addFriendUsernameButton = 2131296379;
+			// aapt resource value: 0x7f09007a
+			public const int addFriendErrorBox = 2131296378;
 			
-			// aapt resource value: 0x7f0900a0
-			public const int addRallyFriendsList = 2131296416;
+			// aapt resource value: 0x7f09007c
+			public const int addFriendUsernameButton = 2131296380;
+			
+			// aapt resource value: 0x7f0900a1
+			public const int addRallyFriendsList = 2131296417;
 			
 			// aapt resource value: 0x7f090010
 			public const int adjust_height = 2131296272;
@@ -2110,14 +2113,14 @@ namespace RallyUp
 			// aapt resource value: 0x7f090047
 			public const int buttonPanel = 2131296327;
 			
-			// aapt resource value: 0x7f09008b
-			public const int cancel_action = 2131296395;
+			// aapt resource value: 0x7f09008c
+			public const int cancel_action = 2131296396;
 			
 			// aapt resource value: 0x7f090057
 			public const int checkbox = 2131296343;
 			
-			// aapt resource value: 0x7f090093
-			public const int chronometer = 2131296403;
+			// aapt resource value: 0x7f090094
+			public const int chronometer = 2131296404;
 			
 			// aapt resource value: 0x7f090034
 			public const int collapseActionView = 2131296308;
@@ -2134,8 +2137,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f090017
 			public const int dark = 2131296279;
 			
-			// aapt resource value: 0x7f090077
-			public const int declineRallyButton = 2131296375;
+			// aapt resource value: 0x7f090078
+			public const int declineRallyButton = 2131296376;
 			
 			// aapt resource value: 0x7f09005e
 			public const int decor_content_parent = 2131296350;
@@ -2152,8 +2155,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f09002b
 			public const int end = 2131296299;
 			
-			// aapt resource value: 0x7f090099
-			public const int end_padder = 2131296409;
+			// aapt resource value: 0x7f09009a
+			public const int end_padder = 2131296410;
 			
 			// aapt resource value: 0x7f090042
 			public const int expand_activities_button = 2131296322;
@@ -2161,26 +2164,26 @@ namespace RallyUp
 			// aapt resource value: 0x7f090056
 			public const int expanded_menu = 2131296342;
 			
-			// aapt resource value: 0x7f09009a
-			public const int flagBox = 2131296410;
+			// aapt resource value: 0x7f09009b
+			public const int flagBox = 2131296411;
 			
 			// aapt resource value: 0x7f09003c
 			public const int forever = 2131296316;
 			
-			// aapt resource value: 0x7f090085
-			public const int friendButton = 2131296389;
+			// aapt resource value: 0x7f090086
+			public const int friendButton = 2131296390;
 			
-			// aapt resource value: 0x7f09007e
-			public const int friendList = 2131296382;
+			// aapt resource value: 0x7f09007f
+			public const int friendList = 2131296383;
 			
-			// aapt resource value: 0x7f09007a
-			public const int friendNameBox = 2131296378;
+			// aapt resource value: 0x7f09007b
+			public const int friendNameBox = 2131296379;
 			
 			// aapt resource value: 0x7f09006f
 			public const int friendRequestView = 2131296367;
 			
-			// aapt resource value: 0x7f09007c
-			public const int friendsBackButton = 2131296380;
+			// aapt resource value: 0x7f09007d
+			public const int friendsBackButton = 2131296381;
 			
 			// aapt resource value: 0x7f090005
 			public const int home = 2131296261;
@@ -2191,8 +2194,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f090046
 			public const int icon = 2131296326;
 			
-			// aapt resource value: 0x7f090098
-			public const int icon_group = 2131296408;
+			// aapt resource value: 0x7f090099
+			public const int icon_group = 2131296409;
 			
 			// aapt resource value: 0x7f090013
 			public const int icon_only = 2131296275;
@@ -2203,8 +2206,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f090043
 			public const int image = 2131296323;
 			
-			// aapt resource value: 0x7f090094
-			public const int info = 2131296404;
+			// aapt resource value: 0x7f090095
+			public const int info = 2131296405;
 			
 			// aapt resource value: 0x7f09003d
 			public const int italic = 2131296317;
@@ -2227,20 +2230,20 @@ namespace RallyUp
 			// aapt resource value: 0x7f090045
 			public const int list_item = 2131296325;
 			
-			// aapt resource value: 0x7f090082
-			public const int loginButton = 2131296386;
+			// aapt resource value: 0x7f090083
+			public const int loginButton = 2131296387;
 			
-			// aapt resource value: 0x7f09007f
-			public const int loginErrorBox = 2131296383;
-			
-			// aapt resource value: 0x7f0900aa
-			public const int logoutButton = 2131296426;
-			
-			// aapt resource value: 0x7f09008d
-			public const int media_actions = 2131296397;
+			// aapt resource value: 0x7f090080
+			public const int loginErrorBox = 2131296384;
 			
 			// aapt resource value: 0x7f0900ab
-			public const int message = 2131296427;
+			public const int logoutButton = 2131296427;
+			
+			// aapt resource value: 0x7f09008e
+			public const int media_actions = 2131296398;
+			
+			// aapt resource value: 0x7f0900ac
+			public const int message = 2131296428;
 			
 			// aapt resource value: 0x7f09002c
 			public const int middle = 2131296300;
@@ -2248,23 +2251,23 @@ namespace RallyUp
 			// aapt resource value: 0x7f090023
 			public const int multiply = 2131296291;
 			
-			// aapt resource value: 0x7f09009b
-			public const int nameBox = 2131296411;
+			// aapt resource value: 0x7f09009c
+			public const int nameBox = 2131296412;
 			
 			// aapt resource value: 0x7f090036
 			public const int never = 2131296310;
 			
-			// aapt resource value: 0x7f09007d
-			public const int newFriendButton = 2131296381;
-			
-			// aapt resource value: 0x7f0900a5
-			public const int newPassBox = 2131296421;
+			// aapt resource value: 0x7f09007e
+			public const int newFriendButton = 2131296382;
 			
 			// aapt resource value: 0x7f0900a6
-			public const int newRegisterButton = 2131296422;
+			public const int newPassBox = 2131296422;
 			
-			// aapt resource value: 0x7f0900a4
-			public const int newUserBox = 2131296420;
+			// aapt resource value: 0x7f0900a7
+			public const int newRegisterButton = 2131296423;
+			
+			// aapt resource value: 0x7f0900a5
+			public const int newUserBox = 2131296421;
 			
 			// aapt resource value: 0x7f090072
 			public const int noFriendButton = 2131296370;
@@ -2275,23 +2278,23 @@ namespace RallyUp
 			// aapt resource value: 0x7f09001a
 			public const int normal = 2131296282;
 			
-			// aapt resource value: 0x7f090096
-			public const int notification_background = 2131296406;
+			// aapt resource value: 0x7f090097
+			public const int notification_background = 2131296407;
+			
+			// aapt resource value: 0x7f090091
+			public const int notification_main_column = 2131296401;
 			
 			// aapt resource value: 0x7f090090
-			public const int notification_main_column = 2131296400;
-			
-			// aapt resource value: 0x7f09008f
-			public const int notification_main_column_container = 2131296399;
+			public const int notification_main_column_container = 2131296400;
 			
 			// aapt resource value: 0x7f090049
 			public const int parentPanel = 2131296329;
 			
-			// aapt resource value: 0x7f090081
-			public const int passBox = 2131296385;
+			// aapt resource value: 0x7f090082
+			public const int passBox = 2131296386;
 			
-			// aapt resource value: 0x7f09009d
-			public const int pingButton = 2131296413;
+			// aapt resource value: 0x7f09009e
+			public const int pingButton = 2131296414;
 			
 			// aapt resource value: 0x7f090006
 			public const int progress_circular = 2131296262;
@@ -2302,44 +2305,44 @@ namespace RallyUp
 			// aapt resource value: 0x7f090059
 			public const int radio = 2131296345;
 			
-			// aapt resource value: 0x7f090084
-			public const int rallyButton = 2131296388;
-			
-			// aapt resource value: 0x7f09009e
-			public const int rallyMenuButton = 2131296414;
+			// aapt resource value: 0x7f090085
+			public const int rallyButton = 2131296389;
 			
 			// aapt resource value: 0x7f09009f
-			public const int rallyTaglineBox = 2131296415;
+			public const int rallyMenuButton = 2131296415;
 			
-			// aapt resource value: 0x7f0900a1
-			public const int rallyUpButton = 2131296417;
-			
-			// aapt resource value: 0x7f090083
-			public const int registerButton = 2131296387;
+			// aapt resource value: 0x7f0900a0
+			public const int rallyTaglineBox = 2131296416;
 			
 			// aapt resource value: 0x7f0900a2
-			public const int registrationErrorBox = 2131296418;
+			public const int rallyUpButton = 2131296418;
 			
-			// aapt resource value: 0x7f090095
-			public const int right_icon = 2131296405;
+			// aapt resource value: 0x7f090084
+			public const int registerButton = 2131296388;
 			
-			// aapt resource value: 0x7f090091
-			public const int right_side = 2131296401;
+			// aapt resource value: 0x7f0900a3
+			public const int registrationErrorBox = 2131296419;
 			
-			// aapt resource value: 0x7f0900a9
-			public const int runningRallyFriendsList = 2131296425;
+			// aapt resource value: 0x7f090096
+			public const int right_icon = 2131296406;
 			
-			// aapt resource value: 0x7f0900a7
-			public const int runningRallyTagline = 2131296423;
+			// aapt resource value: 0x7f090092
+			public const int right_side = 2131296402;
+			
+			// aapt resource value: 0x7f0900aa
+			public const int runningRallyFriendsList = 2131296426;
 			
 			// aapt resource value: 0x7f0900a8
-			public const int runningRallyTimer = 2131296424;
+			public const int runningRallyTagline = 2131296424;
+			
+			// aapt resource value: 0x7f0900a9
+			public const int runningRallyTimer = 2131296425;
 			
 			// aapt resource value: 0x7f090024
 			public const int screen = 2131296292;
 			
-			// aapt resource value: 0x7f0900a3
-			public const int screenNameBox = 2131296419;
+			// aapt resource value: 0x7f0900a4
+			public const int screenNameBox = 2131296420;
 			
 			// aapt resource value: 0x7f09004f
 			public const int scrollIndicatorDown = 2131296335;
@@ -2383,8 +2386,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f09006e
 			public const int select_dialog_listview = 2131296366;
 			
-			// aapt resource value: 0x7f090086
-			public const int settingsButton = 2131296390;
+			// aapt resource value: 0x7f090087
+			public const int settingsButton = 2131296391;
 			
 			// aapt resource value: 0x7f090058
 			public const int shortcut = 2131296344;
@@ -2416,8 +2419,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f090014
 			public const int standard = 2131296276;
 			
-			// aapt resource value: 0x7f09008c
-			public const int status_bar_latest_event_content = 2131296396;
+			// aapt resource value: 0x7f09008d
+			public const int status_bar_latest_event_content = 2131296397;
 			
 			// aapt resource value: 0x7f09005a
 			public const int submenuarrow = 2131296346;
@@ -2443,8 +2446,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f09004d
 			public const int textSpacerNoTitle = 2131296333;
 			
-			// aapt resource value: 0x7f090092
-			public const int time = 2131296402;
+			// aapt resource value: 0x7f090093
+			public const int time = 2131296403;
 			
 			// aapt resource value: 0x7f09000f
 			public const int title = 2131296271;
@@ -2470,8 +2473,8 @@ namespace RallyUp
 			// aapt resource value: 0x7f090021
 			public const int useLogo = 2131296289;
 			
-			// aapt resource value: 0x7f090080
-			public const int userBox = 2131296384;
+			// aapt resource value: 0x7f090081
+			public const int userBox = 2131296385;
 			
 			// aapt resource value: 0x7f090015
 			public const int wide = 2131296277;

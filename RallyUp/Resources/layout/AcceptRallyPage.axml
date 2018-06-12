@@ -13,6 +13,13 @@
         android:textColor="#000000"
         android:gravity="center_horizontal" />
     <TextView
+        android:id="@+id/acceptRallyErrorBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        android:gravity="center_horizontal" />
+    <TextView
         android:id="@+id/acceptRallyTimer"
         android:text="10:00"
         android:layout_width="match_parent"
@@ -38,11 +45,13 @@
                 android:id="@+id/acceptRallyButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="accept rally icon here" />
             <Button
                 android:id="@+id/declineRallyButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:text="decline rally icon here" />
         </LinearLayout>
     </LinearLayout>

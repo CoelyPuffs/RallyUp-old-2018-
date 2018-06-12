@@ -33,7 +33,7 @@ namespace RallyUpServer
             try
             {
                 string clientData = clientSocket.ReadString();
-                Console.WriteLine(clientData);
+                // Console.WriteLine(clientData);
 
                 // Ping Function
                 if (clientData == "Ping")
@@ -166,7 +166,7 @@ namespace RallyUpServer
                     catch (Exception ex)
                     {
                         clientSocket.WriteString("FriendsNotFound");
-                        Console.WriteLine("FriendsNotFound");
+                        Console.WriteLine("Get Friends Error");
                         Console.WriteLine(ex.Message);
                     }
                 }
@@ -215,9 +215,11 @@ namespace RallyUpServer
                             clientSocket.WriteString("FriendNotExist");
                         }
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         clientSocket.WriteString("ErrorAddingFriendRequest");
+                        Console.WriteLine("Add Friend Error");
+                        Console.WriteLine(ex.Message);
                     }
                 }
 
@@ -268,9 +270,11 @@ namespace RallyUpServer
                         cmd.ExecuteNonQuery();
                         sqlConnection1.Close();
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         clientSocket.WriteString("ErrorAddingFriend");
+                        Console.WriteLine("Accept Friend Error");
+                        Console.WriteLine(ex.Message);
                     }
                 }
 
@@ -299,11 +303,97 @@ namespace RallyUpServer
                     LilRally newRally = new LilRally(clientData, DateTime.Now);
                     new Thread(newRally.runLilRally).Start();
                 }
+
+                // Get Rally Info
+                else if (clientData.Split(':')[0] == "GetRally")
+                {
+                    try
+                    {
+                        string rallyStarter = clientData.Substring(9);
+                        sqlConnection1.Open();
+                        SqlCommand cmd = new SqlCommand("SELECT tagline, timeStarted FROM Rally WHERE rallyStarter = @rallyStarter", sqlConnection1);
+                        cmd.Parameters.AddWithValue("@rallyStarter", rallyStarter);
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        string tagline = "";
+                        DateTime timeStarted = new DateTime();
+                        while (reader.Read())
+                        {
+                            tagline = reader.GetValue(0).ToString();
+                            timeStarted = Convert.ToDateTime(reader.GetValue(1));
+                        }
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = "SELECT friendName FROM RallyingWith WHERE rallyStarter = @rallyStarter";
+                        cmd.Parameters.AddWithValue("@rallyStarter", rallyStarter);
+                        reader = cmd.ExecuteReader();
+                        string withFriendsList = "";
+                        string withFriendsLengthList = "";
+                        while (reader.Read())
+                        {
+                            string currentFriend = reader.GetValue(0).ToString();
+                            withFriendsLengthList += currentFriend.Length.ToString() + ',';
+                            withFriendsList += currentFriend;
+                        }
+                        withFriendsLengthList = withFriendsLengthList.TrimEnd(',');
+                        string timeLeft = (600 - (int)DateTime.Now.Subtract(timeStarted).TotalSeconds).ToString();
+                        clientSocket.WriteString(tagline.Length.ToString() + ',' + timeLeft.Length.ToString() + ',' + withFriendsLengthList + ':' + tagline + timeStarted + withFriendsList);
+                    }
+                    catch
+                    {
+                        clientSocket.WriteString("RallyNotFound");
+                    }
+                }
+
+                // Accept Rally
+                else if (clientData.Split(':')[0] == "AcceptRally")
+                {
+                    string[] lengths = clientData.Split(':')[1].Split(',');
+                    string infoString = clientData.Substring(13 + clientData.Split(':')[1].Length);
+                    string rallyStarter = infoString.Substring(0, Convert.ToInt32(lengths[0]));
+                    string rallyFriend = infoString.Substring(Convert.ToInt32(lengths[0]), Convert.ToInt32(lengths[1]));
+
+                    try
+                    {
+                        sqlConnection1.Open();
+                        SqlCommand cmd = new SqlCommand("UPDATE RallyingWith SET hasInteracted = 1, hasAccepted = 1 WHERE rallyStarter = @rallyStarter, rallyFriend = @rallyFriend", sqlConnection1);
+                        cmd.Parameters.AddWithValue("@rallyStarter", rallyStarter);
+                        cmd.Parameters.AddWithValue("@rallyFriend", rallyFriend);
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("Accept Rally Error");
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+
+                // Decline Rally
+                else if (clientData.Split(':')[0] == "DeclineRally")
+                {
+                    string[] lengths = clientData.Split(':')[1].Split(',');
+                    string infoString = clientData.Substring(13 + clientData.Split(':')[1].Length);
+                    string rallyStarter = infoString.Substring(0, Convert.ToInt32(lengths[0]));
+                    string rallyFriend = infoString.Substring(Convert.ToInt32(lengths[0]), Convert.ToInt32(lengths[1]));
+
+                    try
+                    {
+                        sqlConnection1.Open();
+                        SqlCommand cmd = new SqlCommand("UPDATE RallyingWith SET hasInteracted = 1, hasAccepted = 0 WHERE rallyStarter = @rallyStarter, rallyFriend = @rallyFriend", sqlConnection1);
+                        cmd.Parameters.AddWithValue("@rallyStarter", rallyStarter);
+                        cmd.Parameters.AddWithValue("@rallyFriend", rallyFriend);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Decline Rally Error");
+                        Console.WriteLine(ex.Message);
+                    }
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
+            sqlConnection1.Close();
+            clientSocket.Close();
         }
 
         // Function from https://stackoverflow.com/questions/37412963/send-push-to-android-by-c-sharp-using-fcm-firebase-cloud-messaging
@@ -376,8 +466,7 @@ namespace RallyUpServer
                     {
                         body = sendingFriendScreenName + "wants to be your friend",
                         title = "New friend request from " + sendingFriendScreenName,
-                        click_action = "AcceptFriendActivity",
-                        sound = "Enabled"
+                        click_action = "AcceptFriendActivity"
                     },
                     data = new
                     {

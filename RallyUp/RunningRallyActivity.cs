@@ -101,7 +101,7 @@ namespace RallyUp
         {
             RunningRallyFriendViewHolder sfvh = holder as RunningRallyFriendViewHolder;
             friendBoxes.Add(sfvh);
-            sfvh.flagBox.SetImageResource(Resource.Drawable.icon);
+            sfvh.flagBox.SetImageResource(Resource.Drawable.placeholderProfilePhoto);
             sfvh.nameBox.Text = friends[position].screenName;
         }
 

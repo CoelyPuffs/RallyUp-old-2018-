@@ -5,6 +5,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Web.Script.Serialization;
 using System.Text;
+using System.Linq;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace RallyUpServer
 {
@@ -36,9 +39,29 @@ namespace RallyUpServer
                 firstPoint = secondPoint;
             }
 
+            runRallyTimer(DateTime.Now.Subtract(rallyStartTime).TotalSeconds, senderName);
+
+            SqlConnection connection = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=RallyUpDB;Trusted_Connection=True;ConnectRetryCount=0");
+            SqlCommand cmd = new SqlCommand("INSERT INTO Rally VALUES (@tagline, @senderName, @timeStarted)", connection);
+            cmd.Parameters.AddWithValue("@tagline", tagline);
+            cmd.Parameters.AddWithValue("@senderName", senderName);
+            cmd.Parameters.AddWithValue("@timeStarted", rallyStartTime.ToString());
+            connection.Open();
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            cmd.Parameters.Clear();
+
+            cmd.CommandText = "INSERT INTO RallyingWith VALUES (@rallyStarter, @rallyFriend, 0, 0)";
+
             foreach (string friendName in rallyFriendsList)
             {
                 SendRallyNotification(senderName, tagline, friendName);
+                cmd.Parameters.AddWithValue("@rallyStarter", senderName);
+                cmd.Parameters.AddWithValue("@rallyFriend", friendName);
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                connection.Close();
+                cmd.Parameters.Clear();
             }
         }
 
@@ -66,7 +89,7 @@ namespace RallyUpServer
                     data = new
                     {
                         rallyStarter = notifySender,
-                        rallyTagine = notifyBody
+                        rallyTagline = notifyBody
                     }
                 };
 
@@ -98,6 +121,27 @@ namespace RallyUpServer
                 str = ex.Message;
             }
             Console.WriteLine(str);
+        }
+
+        private async void runRallyTimer (double timeLeft, string rallyStarter)
+        {
+            while (timeLeft > 0)
+            {
+                await Task.Delay(1000);
+                timeLeft--;
+            }
+            SqlConnection connection = new SqlConnection(@"Server=(localdb)\MSSQLLocalDB;Database=RallyUpDB;Trusted_Connection=True;ConnectRetryCount=0");
+            connection.Open();
+            SqlCommand cmd = new SqlCommand("DELETE FROM Rally WHERE rallyStarter = @rallyStarter", connection);
+            cmd.Parameters.AddWithValue("@rallyStarter", rallyStarter);
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            cmd.Parameters.Clear();
+            connection.Open();
+            cmd.CommandText = "DELETE FROM RallyingWith WHERE rallyStarter = @rallyStarter";
+            cmd.Parameters.AddWithValue("@rallyStarter", rallyStarter);
+            cmd.ExecuteNonQuery();
+            connection.Close();
         }
     }
 }
